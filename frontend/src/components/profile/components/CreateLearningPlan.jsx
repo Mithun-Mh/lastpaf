@@ -4,7 +4,7 @@ import Navbar from '../../common/Navbar';
 import { useToast } from '../../common/Toast';
 import { API_BASE_URL } from '../../../config/apiConfig';
 
-const CreateLearningPlan = () => {
+const CreateFitnessSchedule = () => {
   const navigate = useNavigate();
   const { addToast } = useToast();
   const [currentUser, setCurrentUser] = useState(null);
@@ -20,7 +20,7 @@ const CreateLearningPlan = () => {
   const [touched, setTouched] = useState({}); // Track which fields have been interacted with
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false); // Track if user has tried to submit
 
-  const resourceTypes = ['Video', 'Documentation', 'Article', 'Tutorial', 'Book'];
+  const resourceTypes = ['Video', 'Equipment', 'Exercise', 'Nutrition', 'Supplement'];
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -254,7 +254,7 @@ const CreateLearningPlan = () => {
       return;
     }
 
-    if (!window.confirm('Are you sure you want to create this learning plan?')) return;
+    if (!window.confirm('Are you sure you want to create this fitness schedule?')) return;
 
     setIsSubmitting(true);
     try {
@@ -274,7 +274,7 @@ const CreateLearningPlan = () => {
       });
 
       const contentType = response.headers.get('Content-Type');
-      let errorMessage = 'Failed to create learning plan';
+      let errorMessage = 'Failed to create fitness schedule';
 
       if (!response.ok) {
         if (contentType && contentType.includes('application/json')) {
@@ -286,7 +286,7 @@ const CreateLearningPlan = () => {
         }
 
         if (response.status === 403) {
-          errorMessage = 'You do not have permission to create a learning plan.';
+          errorMessage = 'You do not have permission to create a fitness schedule.';
         } else if (response.status === 401) {
           localStorage.removeItem('token');
           navigate('/auth');
@@ -297,11 +297,11 @@ const CreateLearningPlan = () => {
       }
 
       const data = await response.json();
-      addToast('Learning plan created successfully!', 'success');
+      addToast('Fitness schedule created successfully!', 'success');
       navigate('/profile');
     } catch (error) {
-      console.error('Error creating learning plan:', error);
-      addToast(error.message || 'Failed to create learning plan. Please try again.', 'error');
+      console.error('Error creating fitness schedule:', error);
+      addToast(error.message || 'Failed to create fitness schedule. Please try again.', 'error');
     } finally {
       setIsSubmitting(false);
     }
@@ -328,7 +328,7 @@ const CreateLearningPlan = () => {
       <Navbar user={currentUser} />
       <div className="max-w-4xl mx-auto pt-8 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">Create a New Learning Plan</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Create a Fitness Schedule</h1>
           <button
             onClick={() => navigate('/profile')}
             className="flex items-center text-indigo-600 hover:text-indigo-800 font-medium text-sm transition-colors duration-200"
@@ -336,14 +336,14 @@ const CreateLearningPlan = () => {
             <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
             </svg>
-            Back to Plans
+            Back to Schedules
           </button>
         </div>
-{/* form submitting */}
+
         <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
           <div className="mb-6">
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-              Plan Title
+              Schedule Title
             </label>
             <input
               type="text"
@@ -355,7 +355,7 @@ const CreateLearningPlan = () => {
               className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${
                 (touched.title || hasAttemptedSubmit) && errors.title ? 'border-red-500' : 'border-gray-300'
               }`}
-              placeholder="Enter plan title"
+              placeholder="Enter schedule title"
               required
             />
             {(touched.title || hasAttemptedSubmit) && errors.title && (
@@ -376,7 +376,7 @@ const CreateLearningPlan = () => {
               className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${
                 (touched.description || hasAttemptedSubmit) && errors.description ? 'border-red-500' : 'border-gray-300'
               }`}
-              placeholder="What do you want to achieve with this learning plan?"
+              placeholder="What are your fitness goals with this schedule?"
               rows="4"
             />
             {(touched.description || hasAttemptedSubmit) && errors.description && (
@@ -386,7 +386,7 @@ const CreateLearningPlan = () => {
 
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-gray-800">Learning Resources</h2>
+              <h2 className="text-lg font-semibold text-gray-800">Fitness Resources</h2>
               <button
                 type="button"
                 onClick={addResource}
@@ -495,7 +495,7 @@ const CreateLearningPlan = () => {
 
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-gray-800">Weekly Timeline</h2>
+              <h2 className="text-lg font-semibold text-gray-800">Weekly Workout Schedule</h2>
               <button
                 type="button"
                 onClick={addWeek}
@@ -542,7 +542,7 @@ const CreateLearningPlan = () => {
                             ? 'border-red-500'
                             : 'border-gray-300'
                         }`}
-                        placeholder="Week title"
+                        placeholder="Week focus (e.g., Cardio & Core)"
                         required
                       />
                       {(touched[`weeksTitle${index}`] || hasAttemptedSubmit) && errors[`weekTitle${index}`] && (
@@ -584,7 +584,7 @@ const CreateLearningPlan = () => {
                           ? 'border-red-500'
                           : 'border-gray-300'
                       }`}
-                      placeholder="What do you plan to achieve this week?"
+                      placeholder="Describe the exercises and goals for this week"
                       rows="2"
                     />
                     {(touched[`weeksDescription${index}`] || hasAttemptedSubmit) && errors[`weekDescription${index}`] && (
@@ -626,7 +626,7 @@ const CreateLearningPlan = () => {
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
-                  Create Learning Plan
+                  Create Fitness Schedule
                 </>
               )}
             </button>
@@ -637,4 +637,4 @@ const CreateLearningPlan = () => {
   );
 };
 
-export default CreateLearningPlan;
+export default CreateFitnessSchedule;

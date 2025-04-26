@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../common/Toast';
 import { API_BASE_URL } from '../../../config/apiConfig';
 
-const LearningTab = () => {
+const FitnessTab = () => {
   const navigate = useNavigate();
   const { addToast } = useToast();
   const [currentUser, setCurrentUser] = useState(null);
@@ -62,13 +62,13 @@ const LearningTab = () => {
     };
   }, [navigate, addToast]);
 
-  // Fetch user's learning plans
+  // Fetch user's fitness plans
   useEffect(() => {
     if (!currentUser?.id) return;
 
     let isMounted = true;
 
-    const fetchLearningPlans = async () => {
+    const fetchFitnessPlans = async () => {
       setIsLoadingPlans(true);
       try {
         const token = localStorage.getItem('token');
@@ -79,7 +79,7 @@ const LearningTab = () => {
         });
 
         if (!response.ok) {
-          throw new Error(`Failed to fetch learning plans: ${response.status}`);
+          throw new Error(`Failed to fetch fitness plans: ${response.status}`);
         }
 
         const data = await response.json();
@@ -93,8 +93,8 @@ const LearningTab = () => {
         }
       } catch (error) {
         if (isMounted) {
-          console.error('Error fetching learning plans:', error);
-          addToast('Failed to load learning plans. Please try again.', 'error');
+          console.error('Error fetching fitness plans:', error);
+          addToast('Failed to load fitness plans. Please try again.', 'error');
           setLearningPlans([]);
           setOtherLearningPlans([]);
         }
@@ -107,7 +107,7 @@ const LearningTab = () => {
       }
     };
 
-    fetchLearningPlans();
+    fetchFitnessPlans();
 
     return () => {
       isMounted = false;
@@ -761,4 +761,4 @@ const LearningTab = () => {
   );
 };
 
-export default LearningTab;
+export default FitnessTab;

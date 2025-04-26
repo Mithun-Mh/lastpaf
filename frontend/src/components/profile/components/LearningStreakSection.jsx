@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { API_BASE_URL } from '../../../config/apiConfig';
 
-// Add refreshTrigger prop to cause component to refresh when learning updates change
-const LearningStreakSection = ({ user, refreshTrigger }) => {
+// Add refreshTrigger prop to cause component to refresh when workout updates change
+const FitnessStreakSection = ({ user, refreshTrigger }) => {
   const [streakData, setStreakData] = useState({
     currentStreak: 0,
     longestStreak: 0,
-    lastLearningDate: null,
+    lastWorkoutDate: null,
     heatmapData: {}
   });
   const [isLoading, setIsLoading] = useState(true);
@@ -44,7 +44,7 @@ const LearningStreakSection = ({ user, refreshTrigger }) => {
     return (
       <div className="bg-white shadow-md rounded-lg p-6 mt-4">
         <h2 className="text-lg font-semibold text-ExtraDarkColor mb-4 flex items-center">
-          <i className='bx bx-flame mr-2'></i>Learning Streak
+          <i className='bx bx-flame mr-2'></i>Workout Streak
         </h2>
         <div className="flex justify-center py-4">
           <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-DarkColor"></div>
@@ -56,7 +56,7 @@ const LearningStreakSection = ({ user, refreshTrigger }) => {
   return (
     <div className="bg-white shadow-md rounded-lg p-6 mt-4">
       <h2 className="text-lg font-semibold text-ExtraDarkColor mb-4 flex items-center">
-        <i className='bx bx-flame mr-2'></i>Learning Streak
+        <i className='bx bx-flame mr-2'></i>Workout Streak
       </h2>
       
       {/* Enhanced Current Streak Display */}
@@ -74,7 +74,7 @@ const LearningStreakSection = ({ user, refreshTrigger }) => {
                 {streakData.currentStreak > 7 ? 'On fire!' : 'Keep it up!'}
               </div>
             ) : (
-              <div className="text-xs text-gray-500">Start learning today!</div>
+              <div className="text-xs text-gray-500">Start your fitness journey today!</div>
             )}
           </div>
         </div>
@@ -140,16 +140,16 @@ const LearningStreakSection = ({ user, refreshTrigger }) => {
         </div>
       )}
       
-      {streakData.lastLearningDate && (
+      {streakData.lastWorkoutDate && (
         <div className="mb-4 text-center text-sm text-gray-600 bg-gray-50 p-2 rounded-lg">
-          Last learning activity: <span className="font-medium">{new Date(streakData.lastLearningDate).toLocaleDateString()}</span>
+          Last workout: <span className="font-medium">{new Date(streakData.lastWorkoutDate).toLocaleDateString()}</span>
         </div>
       )}
       
       {/* Improved Activity Heatmap */}
       <div className="border-t border-gray-200 pt-4">
         <h3 className="text-sm font-medium text-gray-700 mb-2 flex items-center">
-          <i className='bx bx-calendar-check mr-1'></i> Learning Activity
+          <i className='bx bx-calendar-check mr-1'></i> Workout Activity
         </h3>
         <div className="bg-gray-50 p-4 rounded-lg">
           {Object.keys(streakData.heatmapData || {}).length > 0 ? (
@@ -175,7 +175,7 @@ const LearningStreakSection = ({ user, refreshTrigger }) => {
                           count > 1 ? 'bg-green-500 hover:bg-green-600' : 
                           'bg-green-400 hover:bg-green-500'
                         }`}
-                        title={`${formattedDate}: ${count} learning ${count === 1 ? 'update' : 'updates'}`}
+                        title={`${formattedDate}: ${count} workout ${count === 1 ? 'session' : 'sessions'}`}
                       >
                         {count > 1 && (
                           <span className="text-[10px] text-white font-bold">{count}</span>
@@ -205,18 +205,18 @@ const LearningStreakSection = ({ user, refreshTrigger }) => {
               </div>
             </div>
           ) : (
-            <div className="text-center text-gray-500 py-4 text-sm">
+            <div className="text-center py-4 text-gray-500 text-sm">
               <i className='bx bx-calendar-x text-3xl mb-2 text-gray-400'></i>
-              <p>No learning activity recorded yet</p>
-              <p className="text-xs mt-1">Start learning to build your streak!</p>
+              <p>No workout activity recorded yet</p>
+              <p className="text-xs mt-1">Start exercising to build your streak!</p>
             </div>
           )}
         </div>
       </div>
       
-      {/* Streak Badges - Keep this section */}
+      {/* Streak Badges */}
       <div className="mt-4 border-t border-gray-200 pt-4">
-        <h3 className="text-sm font-medium text-gray-700 mb-2">Streak Achievements</h3>
+        <h3 className="text-sm font-medium text-gray-700 mb-2">Fitness Achievements</h3>
         <div className="flex space-x-3 justify-center">
           <div className={`text-center p-2 ${streakData.currentStreak >= 3 ? 'text-orange-500' : 'text-gray-400'}`}>
             <i className='bx bxs-flame text-2xl'></i>
@@ -240,4 +240,4 @@ const LearningStreakSection = ({ user, refreshTrigger }) => {
   );
 };
 
-export default LearningStreakSection;
+export default FitnessStreakSection;

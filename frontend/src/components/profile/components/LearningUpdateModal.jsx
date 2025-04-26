@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const LearningUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode = false, updateToEdit = null }) => {
+const FitnessUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode = false, updateToEdit = null }) => {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [formData, setFormData] = useState({});
   const [step, setStep] = useState(1); // Step 1: Select template, Step 2: Fill form
@@ -17,7 +17,7 @@ const LearningUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode 
         setFormData({
           ...updateToEdit,
           // Ensure any nested properties are properly copied
-          skillsLearned: [...(updateToEdit.skillsLearned || [])]
+          muscleGroups: [...(updateToEdit.muscleGroups || [])]
         });
         setStep(2); // Skip to the form step
       }
@@ -51,11 +51,11 @@ const LearningUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode 
     }));
   };
 
-  const handleSkillsChange = (value) => {
-    const skills = value.split(',').map(skill => skill.trim()).filter(skill => skill !== '');
+  const handleMuscleGroupsChange = (value) => {
+    const groups = value.split(',').map(group => group.trim()).filter(group => group !== '');
     setFormData(prev => ({
       ...prev,
-      skillsLearned: skills
+      muscleGroups: groups
     }));
   };
 
@@ -78,7 +78,7 @@ const LearningUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode 
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center border-b border-gray-200 px-6 py-4">
           <h3 className="text-lg font-semibold">
-            {isEditMode ? 'Edit Learning Update' : (step === 1 ? 'Select Update Type' : 'Add Learning Update')}
+            {isEditMode ? 'Edit Fitness Update' : (step === 1 ? 'Select Workout Type' : 'Add Workout Update')}
           </h3>
           <button
             onClick={handleClose}
@@ -91,7 +91,7 @@ const LearningUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode 
         <div className="p-6">
           {step === 1 ? (
             <div className="space-y-4">
-              <p className="text-gray-600 mb-4">Select the type of learning update you want to add:</p>
+              <p className="text-gray-600 mb-4">Select the type of workout you completed:</p>
               
               {templates && templates.map((template, index) => (
                 <div 
@@ -102,17 +102,17 @@ const LearningUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode 
                   <div className="flex items-center">
                     <div className="w-10 h-10 rounded-full bg-DarkColor text-white flex items-center justify-center">
                       <i className={`bx ${
-                        template.category === 'TUTORIAL' ? 'bx-book-reader' : 
-                        template.category === 'COURSE' ? 'bx-certification' :
-                        'bx-code-block'
+                        template.category === 'CARDIO' ? 'bx-run' : 
+                        template.category === 'STRENGTH' ? 'bx-dumbbell' :
+                        'bx-cycling'
                       } text-xl`}></i>
                     </div>
                     <div className="ml-3">
                       <h4 className="font-medium">{template.title}</h4>
                       <p className="text-sm text-gray-500">
-                        {template.category === 'TUTORIAL' ? 'Record completion of online tutorials or guides' : 
-                         template.category === 'COURSE' ? 'Track your progress through structured courses' :
-                         'Showcase projects you\'ve built while learning'}
+                        {template.category === 'CARDIO' ? 'Track running, cycling, or other cardio workouts' : 
+                         template.category === 'STRENGTH' ? 'Log your strength training and resistance workouts' :
+                         'Record specialized workouts like yoga, swimming, etc.'}
                       </p>
                     </div>
                   </div>
@@ -177,12 +177,12 @@ const LearningUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode 
                       <input
                         type="text"
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-DarkColor"
-                        value={formData.skillsLearned ? formData.skillsLearned.join(', ') : ''}
-                        onChange={(e) => handleSkillsChange(e.target.value)}
-                        placeholder="Separate skills with commas"
+                        value={formData.muscleGroups ? formData.muscleGroups.join(', ') : ''}
+                        onChange={(e) => handleMuscleGroupsChange(e.target.value)}
+                        placeholder="Separate muscle groups with commas"
                         required={field.required}
                       />
-                      <p className="text-xs text-gray-500 mt-1">Example: JavaScript, React, CSS</p>
+                      <p className="text-xs text-gray-500 mt-1">Example: Legs, Core, Arms</p>
                     </div>
                   )}
                 </div>
@@ -202,7 +202,7 @@ const LearningUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode 
                   type="submit"
                   className="px-4 py-2 bg-DarkColor text-white rounded-md hover:bg-ExtraDarkColor"
                 >
-                  {isEditMode ? 'Update' : 'Add Learning Update'}
+                  {isEditMode ? 'Update' : 'Add Workout'}
                 </button>
               </div>
             </form>
@@ -213,4 +213,4 @@ const LearningUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode 
   );
 };
 
-export default LearningUpdateModal;
+export default FitnessUpdateModal;
