@@ -798,7 +798,7 @@ const Profile = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center">
             <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-3">
-              SkillShare Platform
+              Fitness Hub
             </div>
             <div className="flex space-x-4 mb-4">
               <a href="#" className="text-gray-400 hover:text-indigo-600 transition-colors">
@@ -815,7 +815,7 @@ const Profile = () => {
               </a>
             </div>
             <p className="text-gray-500 text-sm">
-              © 2025 SkillShare Platform. All rights reserved.
+              © 2025 Flowiix (PVT)LTD. All rights reserved.
             </p>
           </div>
         </div>
