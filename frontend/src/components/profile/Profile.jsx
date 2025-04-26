@@ -527,23 +527,26 @@ const Profile = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-PrimaryColor">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-DarkColor"></div>
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+        <div className="animate-spin rounded-full h-16 w-16 border-4 border-white border-t-transparent"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-PrimaryColor">
-        <div className="bg-white p-8 rounded-lg shadow-md">
-          <h2 className="text-xl text-red-600 font-semibold mb-4">Error</h2>
-          <p>{error}</p>
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+        <div className="bg-white p-8 rounded-xl shadow-2xl max-w-md w-full">
+          <div className="flex justify-center text-red-500 mb-4">
+            <i className='bx bx-error-circle text-6xl'></i>
+          </div>
+          <h2 className="text-2xl text-center font-bold text-gray-800 mb-4">Something went wrong</h2>
+          <p className="text-gray-600 text-center mb-6">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="mt-4 px-4 py-2 bg-DarkColor text-white rounded-md hover:bg-ExtraDarkColor"
+            className="w-full py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
           >
-            Retry
+            Try Again
           </button>
         </div>
       </div>
@@ -551,11 +554,11 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-100">
       {/* Navbar */}
       <Navbar user={currentUser} />
 
-      {/* Profile Header */}
+      {/* Profile Header - This component's internal styling will be handled by ProfileHeader */}
       <ProfileHeader
         user={user}
         currentUser={currentUser}
@@ -574,110 +577,173 @@ const Profile = () => {
       />
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto mt-6 grid grid-cols-1 md:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-8">
-        {/* Left Sidebar */}
-        <div className="md:col-span-1">
-          <AboutSection
-            user={user}
-            isEditing={isEditing}
-            editForm={editForm}
-            setEditForm={setEditForm}
-            handleEditSubmit={handleEditSubmit}
-            handleSkillChange={handleSkillChange}
-            isUploading={isUploading}
-            imageUpload={imageUpload}
-            imagePreview={imagePreview}
-            setImageUpload={setImageUpload}
-            setImagePreview={setImagePreview}
-            triggerFileInput={triggerFileInput}
-            fileInputRef={fileInputRef}
-          />
-
-          {/* Add the refreshTrigger prop to the streak section */}
-          {user && (
-            <LearningStreakSection
-              user={user}
-              refreshTrigger={streakRefreshTrigger}
-            />
-          )}
+      <div className="max-w-7xl mx-auto mt-8 px-4 sm:px-6 lg:px-8">
+        {/* Quick Stats Bar */}
+        <div className="bg-white rounded-xl shadow-md mb-8 p-4">
+          <div className="grid grid-cols-3 gap-4">
+            <div className="flex flex-col items-center justify-center p-3 border-r border-gray-200">
+              <span className="text-2xl font-bold text-indigo-600">{user?.postsCount || 0}</span>
+              <span className="text-sm text-gray-500">Posts</span>
+            </div>
+            <div onClick={handleShowFollowers} className="flex flex-col items-center justify-center p-3 border-r border-gray-200 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors">
+              <span className="text-2xl font-bold text-indigo-600">{user?.followersCount || 0}</span>
+              <span className="text-sm text-gray-500">Followers</span>
+            </div>
+            <div onClick={handleShowFollowing} className="flex flex-col items-center justify-center p-3 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors">
+              <span className="text-2xl font-bold text-indigo-600">{user?.followingCount || 0}</span>
+              <span className="text-sm text-gray-500">Following</span>
+            </div>
+          </div>
         </div>
 
-        {/* Main Content Area */}
-        <div className="md:col-span-2">
-          {/* Tabs */}
-          <div className="bg-white shadow-md rounded-lg overflow-hidden">
-            <div className="border-b border-gray-200">
-              <nav className="flex">
-                <button
-                  onClick={() => setActiveTab('posts')}
-                  className={`py-4 px-6 text-center border-b-2 font-medium text-sm flex items-center ${
-                    activeTab === 'posts'
-                      ? 'border-DarkColor text-DarkColor'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
-                >
-                  <i className="bx bx-message-square-detail mr-2 text-lg"></i>
-                  Posts
-                </button>
-                <button
-                  onClick={() => setActiveTab('learning')}
-                  className={`py-4 px-6 text-center border-b-2 font-medium text-sm flex items-center ${
-                    activeTab === 'learning'
-                      ? 'border-DarkColor text-DarkColor'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
-                >
-                  <i className="bx bx-book-open mr-2 text-lg"></i>
-                  Learning
-                </button>
-                <button
-                  onClick={() => setActiveTab('achievements')}
-                  className={`py-4 px-6 text-center border-b-2 font-medium text-sm flex items-center ${
-                    activeTab === 'achievements'
-                      ? 'border-DarkColor text-DarkColor'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
-                >
-                  <i className="bx bx-trophy mr-2 text-lg"></i>
-                  Achievements
-                </button>
-              </nav>
+        {/* Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Sidebar */}
+          <div className="space-y-8">
+            {/* About Section */}
+            <div className="bg-white rounded-xl overflow-hidden shadow-md">
+              <div className="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4">
+                <h2 className="text-white text-xl font-semibold flex items-center">
+                  <i className='bx bx-user-circle mr-2'></i> About
+                </h2>
+              </div>
+              <div className="p-6">
+                <AboutSection
+                  user={user}
+                  isEditing={isEditing}
+                  editForm={editForm}
+                  setEditForm={setEditForm}
+                  handleEditSubmit={handleEditSubmit}
+                  handleSkillChange={handleSkillChange}
+                  isUploading={isUploading}
+                  imageUpload={imageUpload}
+                  imagePreview={imagePreview}
+                  setImageUpload={setImageUpload}
+                  setImagePreview={setImagePreview}
+                  triggerFileInput={triggerFileInput}
+                  fileInputRef={fileInputRef}
+                />
+              </div>
             </div>
+            
+            {/* Learning Streak Section */}
+            {user && (
+              <div className="bg-white rounded-xl overflow-hidden shadow-md">
+                <div className="bg-gradient-to-r from-green-500 to-teal-500 px-6 py-4">
+                  <h2 className="text-white text-xl font-semibold flex items-center">
+                    <i className='bx bx-line-chart mr-2'></i> Learning Progress
+                  </h2>
+                </div>
+                <div className="p-6">
+                  <LearningStreakSection
+                    user={user}
+                    refreshTrigger={streakRefreshTrigger}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
 
-            {/* Tab Content */}
-            <div className="p-6">
-              {activeTab === 'posts' && (
-                <PostsTab
-                  isCurrentUserProfile={isCurrentUserProfile}
-                  user={user}
-                  currentUser={currentUser}
-                  setShowPostModal={setShowPostModal}
-                  postFileInputRef={postFileInputRef}
-                  isLoadingPosts={isLoadingPosts}
-                  posts={posts}
-                  setPosts={setPosts}
-                  formatPostDate={formatPostDate}
-                  handleLikePost={handleLikePost}
-                  handleSharePost={handleSharePost}
-                  handlePostUpdated={handlePostUpdated}
+          {/* Main Content Area */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Post Creation Quick Access */}
+            {isCurrentUserProfile && (
+              <div className="bg-white rounded-xl p-4 shadow-md flex items-center space-x-4">
+                <img 
+                  src={user?.profilePicture || '/assets/default-avatar.png'} 
+                  alt="Profile" 
+                  className="w-10 h-10 rounded-full object-cover"
                 />
-              )}
+                <button 
+                  onClick={() => setShowPostModal(true)}
+                  className="flex-1 text-left px-4 py-2 bg-gray-100 rounded-full text-gray-500 hover:bg-gray-200 transition-colors"
+                >
+                  Share your thoughts or learning progress...
+                </button>
+                <button 
+                  onClick={() => setShowPostModal(true)}
+                  className="p-2 rounded-full text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition-colors shadow-md"
+                >
+                  <i className='bx bx-plus text-xl'></i>
+                </button>
+              </div>
+            )}
+            
+            {/* Tabs */}
+            <div className="bg-white shadow-md rounded-xl overflow-hidden">
+              <div className="bg-gradient-to-r from-indigo-50 to-purple-50">
+                <nav className="flex">
+                  <button
+                    onClick={() => setActiveTab('posts')}
+                    className={`flex-1 py-4 px-6 text-center font-medium text-sm flex items-center justify-center transition-all ${
+                      activeTab === 'posts'
+                        ? 'bg-white border-t-4 border-indigo-600 text-indigo-700 shadow'
+                        : 'text-gray-600 hover:text-indigo-600'
+                    }`}
+                  >
+                    <i className={`bx bx-message-square-detail mr-2 text-xl ${activeTab === 'posts' ? 'text-indigo-600' : ''}`}></i>
+                    Posts
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('learning')}
+                    className={`flex-1 py-4 px-6 text-center font-medium text-sm flex items-center justify-center transition-all ${
+                      activeTab === 'learning'
+                        ? 'bg-white border-t-4 border-indigo-600 text-indigo-700 shadow'
+                        : 'text-gray-600 hover:text-indigo-600'
+                    }`}
+                  >
+                    <i className={`bx bx-book-open mr-2 text-xl ${activeTab === 'learning' ? 'text-indigo-600' : ''}`}></i>
+                    Learning
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('achievements')}
+                    className={`flex-1 py-4 px-6 text-center font-medium text-sm flex items-center justify-center transition-all ${
+                      activeTab === 'achievements'
+                        ? 'bg-white border-t-4 border-indigo-600 text-indigo-700 shadow'
+                        : 'text-gray-600 hover:text-indigo-600'
+                    }`}
+                  >
+                    <i className={`bx bx-trophy mr-2 text-xl ${activeTab === 'achievements' ? 'text-indigo-600' : ''}`}></i>
+                    Achievements
+                  </button>
+                </nav>
+              </div>
 
-              {activeTab === 'learning' && (
-                <LearningTab
-                  user={user}
-                  currentUser={currentUser}
-                  isCurrentUserProfile={isCurrentUserProfile}
-                />
-              )}
+              {/* Tab Content */}
+              <div className="p-6">
+                {activeTab === 'posts' && (
+                  <PostsTab
+                    isCurrentUserProfile={isCurrentUserProfile}
+                    user={user}
+                    currentUser={currentUser}
+                    setShowPostModal={setShowPostModal}
+                    postFileInputRef={postFileInputRef}
+                    isLoadingPosts={isLoadingPosts}
+                    posts={posts}
+                    setPosts={setPosts}
+                    formatPostDate={formatPostDate}
+                    handleLikePost={handleLikePost}
+                    handleSharePost={handleSharePost}
+                    handlePostUpdated={handlePostUpdated}
+                  />
+                )}
 
-              {activeTab === 'achievements' && (
-                <AchievementsTab
-                  user={user}
-                  currentUser={currentUser}
-                  onUserUpdated={handleUserUpdated}
-                />
-              )}
+                {activeTab === 'learning' && (
+                  <LearningTab
+                    user={user}
+                    currentUser={currentUser}
+                    isCurrentUserProfile={isCurrentUserProfile}
+                  />
+                )}
+
+                {activeTab === 'achievements' && (
+                  <AchievementsTab
+                    user={user}
+                    currentUser={currentUser}
+                    onUserUpdated={handleUserUpdated}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -728,11 +794,30 @@ const Profile = () => {
       />
 
       {/* Footer */}
-      <footer className="bg-white mt-12 py-6 border-t">
+      <footer className="bg-white mt-12 py-8 border-t">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-gray-500 text-sm">
-            © 2025 SkillShare Platform. All rights reserved.
-          </p>
+          <div className="flex flex-col items-center">
+            <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-3">
+              SkillShare Platform
+            </div>
+            <div className="flex space-x-4 mb-4">
+              <a href="#" className="text-gray-400 hover:text-indigo-600 transition-colors">
+                <i className='bx bxl-facebook text-xl'></i>
+              </a>
+              <a href="#" className="text-gray-400 hover:text-indigo-600 transition-colors">
+                <i className='bx bxl-twitter text-xl'></i>
+              </a>
+              <a href="#" className="text-gray-400 hover:text-indigo-600 transition-colors">
+                <i className='bx bxl-instagram text-xl'></i>
+              </a>
+              <a href="#" className="text-gray-400 hover:text-indigo-600 transition-colors">
+                <i className='bx bxl-linkedin text-xl'></i>
+              </a>
+            </div>
+            <p className="text-gray-500 text-sm">
+              © 2025 SkillShare Platform. All rights reserved.
+            </p>
+          </div>
         </div>
       </footer>
     </div>
