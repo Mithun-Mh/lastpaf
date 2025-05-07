@@ -133,7 +133,7 @@ public class PostController {
             logger.error("Error fetching post by ID: {}", postId, e);
             return ResponseEntity.notFound().build();
         }
-    }
+    }/*adding putMapping */
     
     @DeleteMapping("/{postId}")
     public ResponseEntity<?> deletePost(@PathVariable String postId) {

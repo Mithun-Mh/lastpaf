@@ -28,7 +28,7 @@ import com.skillsharing.model.User;
 import com.skillsharing.repository.LearningUpdateRepository;
 import com.skillsharing.repository.UserRepository;
 
-import lombok.RequiredArgsConstructor;/*constructor using learning */
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/learning")
