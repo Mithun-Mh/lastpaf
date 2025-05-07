@@ -35,7 +35,7 @@ export const ToastProvider = ({ children }) => {
     // Add the toast to the list
     setToasts(prevToasts => [...prevToasts, { id, message, type }]);
 
-    // Auto remove after duration
+    // remove duration
     setTimeout(() => {
       removeToast(id);
     }, duration);
