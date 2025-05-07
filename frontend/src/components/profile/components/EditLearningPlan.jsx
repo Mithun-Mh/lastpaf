@@ -35,7 +35,7 @@ const EditLearningPlan = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        
+
         if (!response.ok) {
           if (response.status === 401) {
             localStorage.removeItem('token');
@@ -53,6 +53,7 @@ const EditLearningPlan = () => {
       }
     };
 
+    
     const fetchLearningPlan = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/learning-plan/${id}`, {
