@@ -195,7 +195,7 @@ const SinglePostView = () => {
           </div>
           
           {/* Post Content */}
-          
+
           <div className="mb-4">
             <p className="text-gray-800 whitespace-pre-line">{post.content}</p>
           </div>
@@ -241,6 +241,7 @@ const SinglePostView = () => {
           </div>
           
           {/* Comments Section */}
+          
           <CommentSection 
             post={post}
             currentUser={currentUser}
