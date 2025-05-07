@@ -109,6 +109,7 @@ const EditLearningPlan = () => {
     }
 
     // Resources validation
+    
     if (formData.resources.length === 0) {
       newErrors.resources = 'At least one resource is required';
     } else {
