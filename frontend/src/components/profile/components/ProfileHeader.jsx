@@ -3,24 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import DefaultCover from '../../../assets/p.png';
 import DefaultAvatar from '../../../assets/avatar.png';
 
-const ProfileHeader = ({ 
-  user, 
-  currentUser, 
-  isCurrentUserProfile, 
-  isEditing, 
-  imagePreview, 
-  triggerFileInput, 
-  fileInputRef, 
-  handleImageChange, 
-  isUploading, 
-  setIsEditing, 
-  handleLogout, 
-  handleFollowAction, 
-  handleShowFollowers, 
-  handleShowFollowing 
+const ProfileHeader = ({
+  user,
+  currentUser,
+  isCurrentUserProfile,
+  isEditing,
+  imagePreview,
+  triggerFileInput,
+  fileInputRef,
+  handleImageChange,
+  isUploading,
+  setIsEditing,
+  handleLogout,
+  handleFollowAction,
+  handleShowFollowers,
+  handleShowFollowing
 }) => {
   const navigate = useNavigate();
-  
+
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden max-w-7xl mx-auto mt-6">
       <div className="h-80 overflow-hidden relative">
@@ -135,8 +135,8 @@ const ProfileHeader = ({
                 <button
                   onClick={handleFollowAction}
                   className={`px-4 py-2 ${user?.isFollowing
-                      ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                      : 'bg-DarkColor text-white hover:bg-ExtraDarkColor'
+                    ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    : 'bg-DarkColor text-white hover:bg-ExtraDarkColor'
                     } rounded-lg transition-colors shadow-sm flex items-center`}
                 >
                   <i className={`bx ${user?.isFollowing ? 'bx-user-minus' : 'bx-user-plus'} mr-1`}></i>

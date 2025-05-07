@@ -5,28 +5,28 @@ import DefaultAvatar from '../../assets/avatar.png';
 import { useToast } from './Toast';
 import ConfirmDialog from './ConfirmDialog';
 
-const CommentSection = ({ 
-  post, 
-  currentUser, 
-  formatTime, 
+const CommentSection = ({
+  post,
+  currentUser,
+  formatTime,
   onCommentAdded,
-  onCommentDeleted 
+  onCommentDeleted
 }) => {
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { addToast } = useToast();
   const navigate = useNavigate();
-  
+
   // Add state for confirm dialog
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState(null);
-  
+
   const handleSubmitComment = async (e) => {
     e.preventDefault();
-    
+
     if (!newComment.trim()) return;
-    
+
     setIsSubmitting(true);
     try {
       const token = localStorage.getItem('token');
@@ -38,19 +38,19 @@ const CommentSection = ({
         },
         body: JSON.stringify({ content: newComment })
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to add comment');
       }
-      
+
       const updatedPost = await response.json();
       setNewComment('');
       setShowComments(true);
-      
+
       if (onCommentAdded) {
         onCommentAdded(updatedPost);
       }
-      
+
       addToast('Comment added successfully!', 'success');
     } catch (error) {
       console.error('Error adding comment:', error);
@@ -59,29 +59,29 @@ const CommentSection = ({
       setIsSubmitting(false);
     }
   };
-  
+
   const handleUserClick = (userId) => {
     navigate(`/profile/${userId}`);
   };
-  
+
   const toggleComments = () => {
     setShowComments(!showComments);
   };
-  
+
   // Add this to determine if user can delete a comment
   const canDeleteComment = (comment) => {
     return currentUser && (
-      currentUser.id === comment.userId || 
+      currentUser.id === comment.userId ||
       currentUser.id === post.authorId
     );
   };
-  
+
   // Make sure we handle the case when onCommentDeleted is not provided
   const handleDeleteComment = (commentId) => {
     setCommentToDelete(commentId);
     setShowConfirmDialog(true);
   };
-  
+
   const confirmDeleteComment = () => {
     if (typeof onCommentDeleted === 'function' && commentToDelete) {
       onCommentDeleted(post.id, commentToDelete);
@@ -91,23 +91,23 @@ const CommentSection = ({
     setShowConfirmDialog(false);
     setCommentToDelete(null);
   };
-  
+
   return (
     <div className="mt-2">
-      <div 
+      <div
         className="flex items-center cursor-pointer py-2 text-gray-500 hover:text-DarkColor"
         onClick={toggleComments}
       >
         <i className={`bx ${showComments ? 'bx-chevron-up' : 'bx-chevron-down'} mr-2`}></i>
         <span>{post.comments?.length || 0} Comments</span>
       </div>
-      
+
       {showComments && (
         <div className="mt-2 space-y-3">
           {/* Comment form */}
           <form onSubmit={handleSubmitComment} className="flex space-x-2">
-            <img 
-              src={currentUser?.profilePicture || DefaultAvatar} 
+            <img
+              src={currentUser?.profilePicture || DefaultAvatar}
               alt={currentUser?.username}
               className="h-8 w-8 rounded-full object-cover"
             />
@@ -133,31 +133,31 @@ const CommentSection = ({
               </button>
             </div>
           </form>
-          
+
           {/* Comments list */}
           <div className="space-y-3">
             {post.comments && post.comments.length > 0 ? (
               post.comments.map((comment) => (
                 <div key={comment.id} className="flex space-x-2 group">
-                  <img 
-                    src={comment.userProfilePicture || DefaultAvatar} 
+                  <img
+                    src={comment.userProfilePicture || DefaultAvatar}
                     alt={comment.username}
                     className="h-8 w-8 rounded-full object-cover cursor-pointer"
                     onClick={() => handleUserClick(comment.userId)}
                   />
                   <div className="flex-1">
                     <div className="bg-gray-100 px-3 py-2 rounded-lg relative">
-                      <p 
+                      <p
                         className="font-medium text-sm text-gray-800 cursor-pointer hover:underline"
                         onClick={() => handleUserClick(comment.userId)}
                       >
                         {comment.username}
                       </p>
                       <p className="text-sm text-gray-700">{comment.content}</p>
-                      
+
                       {/* Use the safe handler for delete */}
                       {canDeleteComment(comment) && (
-                        <button 
+                        <button
                           className="absolute right-2 top-2 text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
                           onClick={() => handleDeleteComment(comment.id)}
                           title="Delete comment"
@@ -178,7 +178,7 @@ const CommentSection = ({
           </div>
         </div>
       )}
-      
+
       {/* Add Confirm Dialog */}
       <ConfirmDialog
         isOpen={showConfirmDialog}

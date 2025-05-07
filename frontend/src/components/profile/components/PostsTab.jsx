@@ -28,18 +28,18 @@ const PostsTab = ({
   const [originalPosts, setOriginalPosts] = useState({});
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
-  
+
   // Fetch original posts for shared posts
   useEffect(() => {
     const fetchOriginalPosts = async () => {
       const token = localStorage.getItem('token');
       const sharedPosts = posts.filter(post => post.originalPostId);
-      
+
       if (sharedPosts.length === 0) return;
-      
+
       const uniqueOriginalPostIds = [...new Set(sharedPosts.map(post => post.originalPostId))];
       const fetchedPosts = {};
-      
+
       for (const postId of uniqueOriginalPostIds) {
         try {
           const response = await fetch(`${API_BASE_URL}/posts/detail/${postId}`, {
@@ -47,7 +47,7 @@ const PostsTab = ({
               'Authorization': `Bearer ${token}`
             }
           });
-          
+
           if (response.ok) {
             const data = await response.json();
             fetchedPosts[postId] = data;
@@ -56,10 +56,10 @@ const PostsTab = ({
           console.error('Error fetching original post:', error);
         }
       }
-      
+
       setOriginalPosts(fetchedPosts);
     };
-    
+
     if (posts.length > 0) {
       fetchOriginalPosts();
     }
@@ -69,7 +69,7 @@ const PostsTab = ({
     setSelectedPost(post);
     setShowShareModal(true);
   };
-  
+
   const navigateToProfile = (userId) => {
     navigate(`/profile/${userId}`);
   };
@@ -84,7 +84,7 @@ const PostsTab = ({
           onClick={() => navigateToProfile(post.authorId)}
         />
         <div className="ml-3">
-          <p 
+          <p
             className="font-medium text-gray-800 cursor-pointer hover:underline"
             onClick={() => navigateToProfile(post.authorId)}
           >
@@ -98,7 +98,7 @@ const PostsTab = ({
 
       <div className="px-3 pb-3">
         <p className="text-gray-800 whitespace-pre-line">{post.content}</p>
-        
+
         {post.mediaUrl && (
           <div className="mt-3 rounded-lg overflow-hidden">
             {post.mediaType === 'IMAGE' ? (
@@ -135,12 +135,12 @@ const PostsTab = ({
       }
 
       const data = await response.json();
-      
+
       // Update the posts state with the updated post
       if (data.post) {
         handlePostUpdated(data.post);
       }
-      
+
       addToast('Comment deleted successfully', 'success');
     } catch (error) {
       console.error('Error deleting comment:', error);
@@ -166,10 +166,10 @@ const PostsTab = ({
       if (!response.ok) {
         throw new Error('Failed to delete post');
       }
-      
+
       // Remove the post from state
       setPosts(prevPosts => prevPosts.filter(post => post.id !== postToDelete));
-      
+
       addToast('Post deleted successfully', 'success');
     } catch (error) {
       console.error('Error deleting post:', error);
@@ -230,7 +230,7 @@ const PostsTab = ({
                     onClick={() => navigateToProfile(post.authorId)}
                   />
                   <div className="ml-3">
-                    <p 
+                    <p
                       className="font-medium text-gray-800 cursor-pointer hover:underline"
                       onClick={() => navigateToProfile(post.authorId)}
                     >
@@ -241,10 +241,10 @@ const PostsTab = ({
                     <p className="text-xs text-gray-500">{formatPostDate(post.createdAt)}</p>
                   </div>
                 </div>
-                
+
                 {currentUser && post.authorId === currentUser.id && (
                   <div className="relative group">
-                    <button 
+                    <button
                       className="text-gray-400 hover:text-red-500 p-1 rounded-full hover:bg-gray-100"
                       onClick={() => handleDeletePost(post.id)}
                       title="Delete post"
@@ -260,7 +260,7 @@ const PostsTab = ({
                   {post.shareMessage && (
                     <p className="text-gray-800 whitespace-pre-line mb-2">{post.shareMessage}</p>
                   )}
-                  
+
                   <div className="border border-gray-200 rounded-lg bg-gray-50">
                     {originalPosts[post.originalPostId] ? (
                       renderPost(originalPosts[post.originalPostId], false)
@@ -300,33 +300,31 @@ const PostsTab = ({
               )}
 
               <div className="flex justify-between items-center pt-3 border-t border-gray-200">
-                <button 
-                  className={`flex items-center ${
-                    post.likes && currentUser && post.likes.includes(currentUser.id) 
-                      ? 'text-blue-500 font-medium' 
+                <button
+                  className={`flex items-center ${post.likes && currentUser && post.likes.includes(currentUser.id)
+                      ? 'text-blue-500 font-medium'
                       : 'text-gray-500 hover:text-DarkColor'
-                  }`}
+                    }`}
                   onClick={() => handleLikePost(post.id)}
                 >
-                  <i className={`bx ${
-                    post.likes && currentUser && post.likes.includes(currentUser.id) 
-                      ? 'bxs-like' 
+                  <i className={`bx ${post.likes && currentUser && post.likes.includes(currentUser.id)
+                      ? 'bxs-like'
                       : 'bx-like'
-                  } mr-1`}></i> {post.likes ? post.likes.length : 0} Likes
+                    } mr-1`}></i> {post.likes ? post.likes.length : 0} Likes
                 </button>
                 <button className="flex items-center text-gray-500 hover:text-DarkColor">
                   <i className='bx bx-comment mr-1'></i> {post.comments?.length || 0} Comments
                 </button>
-                <button 
+                <button
                   className="flex items-center text-gray-500 hover:text-DarkColor"
                   onClick={() => openShareModal(post.originalPostId ? originalPosts[post.originalPostId] || post : post)}
                 >
-                  <i className='bx bx-share mr-1'></i> 
+                  <i className='bx bx-share mr-1'></i>
                   {post.shares ? post.shares.length : 0} Shares
                 </button>
               </div>
 
-              <CommentSection 
+              <CommentSection
                 post={post}
                 currentUser={currentUser}
                 formatTime={formatPostDate}

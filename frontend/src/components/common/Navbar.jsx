@@ -13,7 +13,7 @@ const Navbar = ({ user }) => {
   const [showResults, setShowResults] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const searchRef = useRef(null);
-  
+
   // Notification state
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -34,38 +34,38 @@ const Navbar = ({ user }) => {
         setShowNotifications(false);
       }
     };
-    
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-  
+
   // Fetch notifications and count
   useEffect(() => {
     const fetchUnreadCounts = async () => {
       if (!user) return;
-      
+
       try {
         const token = localStorage.getItem('token');
-        
+
         // Fetch notification count
         const notifResponse = await fetch(`${API_BASE_URL}/users/notifications/count`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
         });
-        
+
         if (notifResponse.ok) {
           const notifData = await notifResponse.json();
           setUnreadCount(notifData.count);
         }
-        
+
         // Fetch message count
         const msgResponse = await fetch(`${API_BASE_URL}/messages/unread-count`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
         });
-        
+
         if (msgResponse.ok) {
           const msgData = await msgResponse.json();
           setUnreadMessageCount(msgData.count);
@@ -74,19 +74,19 @@ const Navbar = ({ user }) => {
         console.error('Error fetching unread counts:', error);
       }
     };
-    
+
     fetchUnreadCounts();
-    
+
     // Poll for updates
     const intervalId = setInterval(fetchUnreadCounts, 30000);
-    
+
     return () => clearInterval(intervalId);
   }, [user]);
-  
+
   // Fetch notifications when dropdown is opened
   const fetchNotifications = async () => {
     if (!user) return;
-    
+
     setIsLoadingNotifications(true);
     try {
       const token = localStorage.getItem('token');
@@ -95,7 +95,7 @@ const Navbar = ({ user }) => {
           'Authorization': `Bearer ${token}`
         }
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         setNotifications(data);
@@ -106,7 +106,7 @@ const Navbar = ({ user }) => {
       setIsLoadingNotifications(false);
     }
   };
-  
+
   // Toggle notifications dropdown
   const toggleNotifications = () => {
     if (!showNotifications) {
@@ -114,7 +114,7 @@ const Navbar = ({ user }) => {
     }
     setShowNotifications(!showNotifications);
   };
-  
+
   // Mark notification as read
   const markAsRead = async (notificationId) => {
     try {
@@ -127,17 +127,17 @@ const Navbar = ({ user }) => {
         },
         body: JSON.stringify([notificationId])
       });
-      
+
       if (response.ok) {
         // Update local state
-        setNotifications(prev => 
-          prev.map(notification => 
-            notification.id === notificationId 
-              ? { ...notification, read: true } 
+        setNotifications(prev =>
+          prev.map(notification =>
+            notification.id === notificationId
+              ? { ...notification, read: true }
               : notification
           )
         );
-        
+
         // Update unread count
         setUnreadCount(prev => Math.max(0, prev - 1));
       }
@@ -146,7 +146,7 @@ const Navbar = ({ user }) => {
       addToast('Failed to mark notification as read', 'error');
     }
   };
-  
+
   // Mark all notifications as read
   const markAllAsRead = async () => {
     try {
@@ -157,13 +157,13 @@ const Navbar = ({ user }) => {
           'Authorization': `Bearer ${token}`
         }
       });
-      
+
       if (response.ok) {
         // Update local state
-        setNotifications(prev => 
+        setNotifications(prev =>
           prev.map(notification => ({ ...notification, read: true }))
         );
-        
+
         // Reset unread count
         setUnreadCount(0);
         addToast('All notifications marked as read', 'success');
@@ -173,7 +173,7 @@ const Navbar = ({ user }) => {
       addToast('Failed to mark all notifications as read', 'error');
     }
   };
-  
+
   // Clear all notifications
   const clearAllNotifications = async () => {
     try {
@@ -184,7 +184,7 @@ const Navbar = ({ user }) => {
           'Authorization': `Bearer ${token}`
         }
       });
-      
+
       if (response.ok) {
         // Clear notifications and reset count
         setNotifications([]);
@@ -196,14 +196,14 @@ const Navbar = ({ user }) => {
       addToast('Failed to clear notifications', 'error');
     }
   };
-  
+
   // Handle notification click (navigate to relevant page)
   const handleNotificationClick = (notification) => {
     // Mark as read
     if (!notification.read) {
       markAsRead(notification.id);
     }
-    
+
     // Navigate based on notification type
     switch (notification.type) {
       case 'FOLLOW':
@@ -220,7 +220,7 @@ const Navbar = ({ user }) => {
         // Default behavior - just close the dropdown
         break;
     }
-    
+
     setShowNotifications(false);
   };
 
@@ -285,20 +285,20 @@ const Navbar = ({ user }) => {
     try {
       // Keep track of the previous state in case we need to revert
       const originalFollowState = isFollowing;
-      
+
       // Immediately update UI for better user experience
-      setSearchResults(prev => 
-        prev.map(user => 
-          user.id === userId 
-            ? { ...user, isFollowing: !isFollowing } 
+      setSearchResults(prev =>
+        prev.map(user =>
+          user.id === userId
+            ? { ...user, isFollowing: !isFollowing }
             : user
         )
       );
-      
+
       // Make the API request based on the original state
       const token = localStorage.getItem('token');
       const endpoint = originalFollowState ? 'unfollow' : 'follow';
-      
+
       const response = await fetch(`${API_BASE_URL}/users/${endpoint}/${userId}`, {
         method: 'POST',
         headers: {
@@ -308,26 +308,26 @@ const Navbar = ({ user }) => {
 
       if (!response.ok) {
         // If the request failed, revert the UI change
-        setSearchResults(prev => 
-          prev.map(user => 
-            user.id === userId 
-              ? { ...user, isFollowing: originalFollowState } 
+        setSearchResults(prev =>
+          prev.map(user =>
+            user.id === userId
+              ? { ...user, isFollowing: originalFollowState }
               : user
           )
         );
-        
+
         const errorData = await response.json();
         throw new Error(errorData.message || `Failed to ${endpoint} user`);
       }
-      
+
       // Show success message
       addToast(
-        originalFollowState 
-          ? 'Successfully unfollowed user' 
-          : 'Successfully followed user', 
+        originalFollowState
+          ? 'Successfully unfollowed user'
+          : 'Successfully followed user',
         'success'
       );
-      
+
       // After a small delay, refresh the search results to ensure consistency with backend
       setTimeout(async () => {
         if (searchTerm) {
@@ -338,13 +338,13 @@ const Navbar = ({ user }) => {
                 'Authorization': `Bearer ${token}`
               }
             });
-            
+
             if (searchResponse.ok) {
               const data = await searchResponse.json();
               // Preserve the modified follow status for the user we just changed
-              const updatedResults = data.map(user => 
-                user.id === userId 
-                  ? { ...user, isFollowing: !originalFollowState } 
+              const updatedResults = data.map(user =>
+                user.id === userId
+                  ? { ...user, isFollowing: !originalFollowState }
                   : user
               );
               setSearchResults(updatedResults);
@@ -354,7 +354,7 @@ const Navbar = ({ user }) => {
           }
         }
       }, 500); // Half-second delay to ensure backend processing completes
-      
+
     } catch (error) {
       console.error(`Error ${isFollowing ? 'unfollowing' : 'following'} user:`, error);
       addToast(error.message || `Failed to ${isFollowing ? 'unfollow' : 'follow'} user. Please try again.`, 'error');
@@ -364,7 +364,7 @@ const Navbar = ({ user }) => {
   // Format notification time
   const formatTime = (dateTime) => {
     if (!dateTime) return '';
-    
+
     const date = new Date(dateTime);
     const now = new Date();
     const diffMs = now - date;
@@ -372,12 +372,12 @@ const Navbar = ({ user }) => {
     const diffMin = Math.floor(diffSec / 60);
     const diffHour = Math.floor(diffMin / 60);
     const diffDay = Math.floor(diffHour / 24);
-    
+
     if (diffSec < 60) return 'just now';
     if (diffMin < 60) return `${diffMin}m ago`;
     if (diffHour < 24) return `${diffHour}h ago`;
     if (diffDay < 7) return `${diffDay}d ago`;
-    
+
     return date.toLocaleDateString();
   };
 
@@ -403,13 +403,13 @@ const Navbar = ({ user }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <span 
+            <span
               className="text-ExtraDarkColor text-xl font-bold cursor-pointer mr-6"
               onClick={() => navigate('/dashboard')}
             >
               FitSphere
             </span>
-            
+
             {/* Search Bar */}
             <div className="relative" ref={searchRef}>
               <div className="relative">
@@ -429,7 +429,7 @@ const Navbar = ({ user }) => {
                   )}
                 </div>
               </div>
-              
+
               {/* Search Results Dropdown */}
               {showResults && (
                 <div className="absolute mt-2 w-80 bg-white rounded-lg shadow-lg overflow-hidden z-10">
@@ -438,18 +438,18 @@ const Navbar = ({ user }) => {
                       {searchResults.map((result) => (
                         <li key={result.id} className="border-b border-gray-100 last:border-0">
                           <div className="flex items-center justify-between p-3 hover:bg-gray-50">
-                            <div 
+                            <div
                               className="flex items-center cursor-pointer"
                               onClick={() => handleUserSelect(result.id)}
                             >
-                              <img 
-                                src={result.profilePicture || DefaultAvatar} 
+                              <img
+                                src={result.profilePicture || DefaultAvatar}
                                 alt={result.fullName || result.username}
                                 className="h-10 w-10 rounded-full object-cover"
                               />
                               <div className="ml-3">
                                 <p className="font-medium text-gray-800">
-                                  {result.firstName && result.lastName 
+                                  {result.firstName && result.lastName
                                     ? `${result.firstName} ${result.lastName}`
                                     : result.firstName || result.lastName || result.username}
                                 </p>
@@ -457,12 +457,11 @@ const Navbar = ({ user }) => {
                                 <p className="text-sm text-gray-500 truncate">{result.bio || 'No bio'}</p>
                               </div>
                             </div>
-                            <button 
-                              className={`px-3 py-1 rounded-full text-xs font-medium ${
-                                result.isFollowing 
-                                  ? 'bg-gray-200 text-gray-700 hover:bg-gray-300' 
+                            <button
+                              className={`px-3 py-1 rounded-full text-xs font-medium ${result.isFollowing
+                                  ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                   : 'bg-DarkColor text-white hover:bg-ExtraDarkColor'
-                              }`}
+                                }`}
                               onClick={() => handleFollowUser(result.id, result.isFollowing)}
                             >
                               {result.isFollowing ? 'Unfollow' : 'Follow'}
@@ -480,28 +479,28 @@ const Navbar = ({ user }) => {
               )}
             </div>
           </div>
-          
+
           <div className="flex items-center space-x-4">
-            <button 
+            <button
               className="p-2 rounded-full hover:bg-gray-100 transition-colors"
               onClick={() => navigate('/dashboard')}
               title="Dashboard"
             >
               <i className='bx bxs-home text-xl text-DarkColor'></i>
             </button>
-            
+
             {/* Learning Plans Button */}
-            <button 
+            <button
               className="p-2 rounded-full hover:bg-gray-100 transition-colors"
               onClick={() => navigate('/learning-plans')}
               title="Learning Plans"
             >
               <i className='bx bx-book-open text-xl text-DarkColor'></i>
             </button>
-            
+
             {/* Notification Bell */}
             <div className="relative" ref={notificationRef}>
-              <button 
+              <button
                 className="p-2 rounded-full hover:bg-gray-100 transition-colors relative"
                 onClick={toggleNotifications}
                 title="Notifications"
@@ -513,22 +512,22 @@ const Navbar = ({ user }) => {
                   </span>
                 )}
               </button>
-              
+
               {/* Notifications Dropdown */}
               {showNotifications && (
                 <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg overflow-hidden z-50">
                   <div className="flex justify-between items-center p-3 border-b border-gray-100">
                     <h3 className="font-semibold text-gray-700">Notifications</h3>
                     <div className="flex space-x-2">
-                      <button 
-                        onClick={markAllAsRead} 
+                      <button
+                        onClick={markAllAsRead}
                         className="text-xs text-blue-600 hover:text-blue-800"
                         title="Mark all as read"
                       >
                         Mark all read
                       </button>
-                      <button 
-                        onClick={clearAllNotifications} 
+                      <button
+                        onClick={clearAllNotifications}
                         className="text-xs text-red-600 hover:text-red-800"
                         title="Clear all notifications"
                       >
@@ -536,7 +535,7 @@ const Navbar = ({ user }) => {
                       </button>
                     </div>
                   </div>
-                  
+
                   <div className="max-h-96 overflow-y-auto">
                     {isLoadingNotifications ? (
                       <div className="flex justify-center items-center p-4">
@@ -545,14 +544,14 @@ const Navbar = ({ user }) => {
                     ) : notifications.length > 0 ? (
                       <ul>
                         {notifications.map(notification => (
-                          <li 
-                            key={notification.id} 
+                          <li
+                            key={notification.id}
                             className={`border-b border-gray-100 hover:bg-gray-50 cursor-pointer ${!notification.read ? 'bg-blue-50' : ''}`}
                             onClick={() => handleNotificationClick(notification)}
                           >
                             <div className="flex p-3">
-                              <img 
-                                src={notification.senderProfilePicture || DefaultAvatar} 
+                              <img
+                                src={notification.senderProfilePicture || DefaultAvatar}
                                 alt={notification.senderUsername}
                                 className="h-10 w-10 rounded-full object-cover"
                               />
@@ -564,7 +563,7 @@ const Navbar = ({ user }) => {
                                   <span className="text-xs text-gray-500">{formatTime(notification.createdAt)}</span>
                                 </div>
                                 {!notification.read && (
-                                  <button 
+                                  <button
                                     className="text-xs text-blue-600 hover:text-blue-800 mt-1"
                                     onClick={(e) => {
                                       e.stopPropagation();
@@ -588,8 +587,8 @@ const Navbar = ({ user }) => {
                 </div>
               )}
             </div>
-            
-            <button 
+
+            <button
               className="p-2 rounded-full hover:bg-gray-100 transition-colors relative"
               onClick={() => navigate('/messages')}
               title="Messages"
@@ -601,17 +600,17 @@ const Navbar = ({ user }) => {
                 </span>
               )}
             </button>
-            
+
             <div className="relative ml-3">
               <div>
-                <button 
+                <button
                   className="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-DarkColor"
                   onClick={() => navigate('/profile')}
                   title="Profile"
                 >
-                  <img 
+                  <img
                     className="h-8 w-8 rounded-full object-cover border-2 border-DarkColor"
-                    src={user?.profilePicture || DefaultAvatar} 
+                    src={user?.profilePicture || DefaultAvatar}
                     alt={user?.username || 'User'}
                   />
                 </button>

@@ -7,11 +7,11 @@ import { useToast } from '../common/Toast';
 const Auth = () => {
     const [isActive, setIsActive] = useState(false);
     const [loginData, setLoginData] = useState({ email: '', password: '' });
-    const [registerData, setRegisterData] = useState({ 
+    const [registerData, setRegisterData] = useState({
         firstName: '',
         lastName: '',
-        username: '', 
-        email: '', 
+        username: '',
+        email: '',
         password: '',
         role: 'BEGINNER'
     });
@@ -93,40 +93,40 @@ const Auth = () => {
                         <h1 className="text-4xl font-bold mb-3 text-gray-800 tracking-wide">Welcome Back</h1>
                         <div className="w-16 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto mb-6 rounded-full"></div>
                         <p className="text-gray-600 mb-8">Enter your credentials to access your account</p>
-                        
+
                         <div className="relative my-7">
                             <div className="flex items-center bg-gray-50 rounded-lg overflow-hidden mb-1 group focus-within:ring-2 focus-within:ring-indigo-400 transition-all duration-300">
                                 <div className="p-3 bg-indigo-100 text-indigo-600 group-focus-within:bg-indigo-600 group-focus-within:text-white transition-all duration-300">
                                     <i className='bx bxs-envelope text-xl'></i>
                                 </div>
-                                <input 
-                                    type="email" 
-                                    placeholder="Email Address" 
+                                <input
+                                    type="email"
+                                    placeholder="Email Address"
                                     required
                                     value={loginData.email}
-                                    onChange={(e) => setLoginData({...loginData, email: e.target.value})}
+                                    onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
                                     className="flex-1 py-3 px-4 border-0 bg-transparent outline-none text-gray-800"
                                 />
                             </div>
                             <div className="h-0.5 w-0 bg-indigo-600 transition-all duration-500 group-focus-within:w-full"></div>
                         </div>
-                        
+
                         <div className="relative my-7">
                             <div className="flex items-center bg-gray-50 rounded-lg overflow-hidden mb-1 group focus-within:ring-2 focus-within:ring-indigo-400 transition-all duration-300">
                                 <div className="p-3 bg-indigo-100 text-indigo-600 group-focus-within:bg-indigo-600 group-focus-within:text-white transition-all duration-300">
                                     <i className='bx bxs-lock-alt text-xl'></i>
                                 </div>
-                                <input 
-                                    type="password" 
-                                    placeholder="Password" 
+                                <input
+                                    type="password"
+                                    placeholder="Password"
                                     required
                                     value={loginData.password}
-                                    onChange={(e) => setLoginData({...loginData, password: e.target.value})}
+                                    onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
                                     className="flex-1 py-3 px-4 border-0 bg-transparent outline-none text-gray-800"
                                 />
                             </div>
                         </div>
-                        
+
                         <div className="flex justify-between items-center mb-8">
                             <label className="flex items-center text-gray-600 text-sm cursor-pointer">
                                 <input type="checkbox" className="form-checkbox h-4 w-4 text-indigo-600 rounded focus:ring-indigo-500 mr-2" />
@@ -134,18 +134,18 @@ const Auth = () => {
                             </label>
                             <a href="#" className="text-sm text-indigo-600 hover:text-indigo-800 hover:underline transition-all">Forgot Password?</a>
                         </div>
-                        
-                        <button type="submit" 
-                                className="w-full h-12 rounded-lg shadow-md border-none cursor-pointer text-base text-white font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg">
+
+                        <button type="submit"
+                            className="w-full h-12 rounded-lg shadow-md border-none cursor-pointer text-base text-white font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg">
                             Sign In
                         </button>
-                        
+
                         <div className="relative flex items-center justify-center my-6">
                             <div className="flex-grow h-px bg-gray-300"></div>
                             <span className="mx-2 text-xs text-gray-500 bg-white px-2">OR CONTINUE WITH</span>
                             <div className="flex-grow h-px bg-gray-300"></div>
                         </div>
-                        
+
                         <div className="flex justify-center">
                             <a href="#" className="inline-flex justify-center items-center w-10 h-10 rounded-full border border-gray-300 text-xl text-gray-700 mx-2 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-300 transition-all">
                                 <i className='bx bxl-google'></i>
@@ -169,17 +169,17 @@ const Auth = () => {
                         <h1 className="text-3xl font-bold mb-3 text-gray-800 tracking-wide">Create Account</h1>
                         <div className="w-16 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto mb-4 rounded-full"></div>
                         <p className="text-gray-600 mb-6">Join our community today</p>
-                        
+
                         <div className="grid grid-cols-2 gap-3 mb-4">
                             <div className="flex items-center bg-gray-50 rounded-lg overflow-hidden group focus-within:ring-2 focus-within:ring-indigo-400 transition-all duration-300">
                                 <div className="p-2.5 bg-indigo-100 text-indigo-600 group-focus-within:bg-indigo-600 group-focus-within:text-white transition-all duration-300">
                                     <i className='bx bx-user text-lg'></i>
                                 </div>
-                                <input 
-                                    type="text" 
-                                    placeholder="First Name" 
+                                <input
+                                    type="text"
+                                    placeholder="First Name"
                                     value={registerData.firstName}
-                                    onChange={(e) => setRegisterData({...registerData, firstName: e.target.value})}
+                                    onChange={(e) => setRegisterData({ ...registerData, firstName: e.target.value })}
                                     className="flex-1 py-2.5 px-2 border-0 bg-transparent outline-none text-sm text-gray-800"
                                 />
                             </div>
@@ -187,65 +187,65 @@ const Auth = () => {
                                 <div className="p-2.5 bg-indigo-100 text-indigo-600 group-focus-within:bg-indigo-600 group-focus-within:text-white transition-all duration-300">
                                     <i className='bx bx-user text-lg'></i>
                                 </div>
-                                <input 
-                                    type="text" 
-                                    placeholder="Last Name" 
+                                <input
+                                    type="text"
+                                    placeholder="Last Name"
                                     value={registerData.lastName}
-                                    onChange={(e) => setRegisterData({...registerData, lastName: e.target.value})}
+                                    onChange={(e) => setRegisterData({ ...registerData, lastName: e.target.value })}
                                     className="flex-1 py-2.5 px-2 border-0 bg-transparent outline-none text-sm text-gray-800"
                                 />
                             </div>
                         </div>
-                        
+
                         <div className="flex items-center bg-gray-50 rounded-lg overflow-hidden mb-3 group focus-within:ring-2 focus-within:ring-indigo-400 transition-all duration-300">
                             <div className="p-2.5 bg-indigo-100 text-indigo-600 group-focus-within:bg-indigo-600 group-focus-within:text-white transition-all duration-300">
                                 <i className='bx bx-at text-lg'></i>
                             </div>
-                            <input 
-                                type="text" 
-                                placeholder="Username" 
+                            <input
+                                type="text"
+                                placeholder="Username"
                                 required
                                 value={registerData.username}
-                                onChange={(e) => setRegisterData({...registerData, username: e.target.value})}
+                                onChange={(e) => setRegisterData({ ...registerData, username: e.target.value })}
                                 className="flex-1 py-2.5 px-3 border-0 bg-transparent outline-none text-sm text-gray-800"
                             />
                         </div>
-                        
+
                         <div className="flex items-center bg-gray-50 rounded-lg overflow-hidden mb-3 group focus-within:ring-2 focus-within:ring-indigo-400 transition-all duration-300">
                             <div className="p-2.5 bg-indigo-100 text-indigo-600 group-focus-within:bg-indigo-600 group-focus-within:text-white transition-all duration-300">
                                 <i className='bx bxs-envelope text-lg'></i>
                             </div>
-                            <input 
-                                type="email" 
-                                placeholder="Email Address" 
+                            <input
+                                type="email"
+                                placeholder="Email Address"
                                 required
                                 value={registerData.email}
-                                onChange={(e) => setRegisterData({...registerData, email: e.target.value})}
+                                onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
                                 className="flex-1 py-2.5 px-3 border-0 bg-transparent outline-none text-sm text-gray-800"
                             />
                         </div>
-                        
+
                         <div className="flex items-center bg-gray-50 rounded-lg overflow-hidden mb-3 group focus-within:ring-2 focus-within:ring-indigo-400 transition-all duration-300">
                             <div className="p-2.5 bg-indigo-100 text-indigo-600 group-focus-within:bg-indigo-600 group-focus-within:text-white transition-all duration-300">
                                 <i className='bx bxs-lock-alt text-lg'></i>
                             </div>
-                            <input 
-                                type="password" 
-                                placeholder="Password" 
+                            <input
+                                type="password"
+                                placeholder="Password"
                                 required
                                 value={registerData.password}
-                                onChange={(e) => setRegisterData({...registerData, password: e.target.value})}
+                                onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
                                 className="flex-1 py-2.5 px-3 border-0 bg-transparent outline-none text-sm text-gray-800"
                             />
                         </div>
-                        
+
                         <div className="flex items-center bg-gray-50 rounded-lg overflow-hidden mb-4 group focus-within:ring-2 focus-within:ring-indigo-400 transition-all duration-300">
                             <div className="p-2.5 bg-indigo-100 text-indigo-600 group-focus-within:bg-indigo-600 group-focus-within:text-white transition-all duration-300">
                                 <i className='bx bxs-graduation text-lg'></i>
                             </div>
                             <select
                                 value={registerData.role}
-                                onChange={(e) => setRegisterData({...registerData, role: e.target.value})}
+                                onChange={(e) => setRegisterData({ ...registerData, role: e.target.value })}
                                 className="flex-1 py-2.5 px-3 border-0 bg-transparent outline-none text-sm text-gray-800 appearance-none"
                             >
                                 <option value="BEGINNER">Beginner</option>
@@ -258,27 +258,27 @@ const Auth = () => {
                         </div>
 
                         <div className="flex items-center mb-4">
-                            <input 
-                                type="checkbox" 
-                                id="terms" 
+                            <input
+                                type="checkbox"
+                                id="terms"
                                 className="form-checkbox h-4 w-4 text-indigo-600 rounded focus:ring-indigo-500 mr-2"
                             />
                             <label htmlFor="terms" className="text-xs text-gray-600">
                                 I agree to the <a href="#" className="text-indigo-600 hover:underline">Terms of Service</a> and <a href="#" className="text-indigo-600 hover:underline">Privacy Policy</a>
                             </label>
                         </div>
-                        
-                        <button type="submit" 
-                                className="w-full h-10 rounded-lg shadow-md border-none cursor-pointer text-sm text-white font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg">
+
+                        <button type="submit"
+                            className="w-full h-10 rounded-lg shadow-md border-none cursor-pointer text-sm text-white font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg">
                             Create Account
                         </button>
-                        
+
                         <div className="relative flex items-center justify-center my-5">
                             <div className="flex-grow h-px bg-gray-300"></div>
                             <span className="mx-2 text-xs text-gray-500 bg-white px-2">OR SIGN UP WITH</span>
                             <div className="flex-grow h-px bg-gray-300"></div>
                         </div>
-                        
+
                         <div className="flex justify-center gap-3">
                             <a href="#" className="inline-flex justify-center items-center w-9 h-9 rounded-full border border-gray-300 text-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-300 transition-all">
                                 <i className='bx bxl-google'></i>
@@ -311,7 +311,7 @@ const Auth = () => {
                         </div>
                         <h1 className="text-4xl font-bold mb-4">New Here?</h1>
                         <p className="mb-8 text-center text-white/90">Sign up and discover a great amount of opportunities!</p>
-                        <button 
+                        <button
                             className="w-48 h-12 bg-transparent rounded-full font-semibold border-2 border-white text-white hover:bg-white hover:text-indigo-600 transition-all duration-300"
                             onClick={() => setIsActive(true)}
                         >
@@ -326,7 +326,7 @@ const Auth = () => {
                         </div>
                         <h1 className="text-4xl font-bold mb-4">One of Us?</h1>
                         <p className="mb-8 text-center text-white/90">Login to access your profile and continue your learning journey!</p>
-                        <button 
+                        <button
                             className="w-48 h-12 bg-transparent rounded-full font-semibold border-2 border-white text-white hover:bg-white hover:text-indigo-600 transition-all duration-300"
                             onClick={() => setIsActive(false)}
                         >
