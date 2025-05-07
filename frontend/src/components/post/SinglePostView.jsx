@@ -15,7 +15,7 @@ const SinglePostView = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch current user
+  // Fetch user
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
