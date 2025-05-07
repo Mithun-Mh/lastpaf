@@ -12,10 +12,10 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
   const [templates, setTemplates] = useState([]);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [updateToDelete, setUpdateToDelete] = useState(null);
-  
+
   const [isEditMode, setIsEditMode] = useState(false);
   const [updateToEdit, setUpdateToEdit] = useState(null);
-  
+
   const isCurrentUserProfile = user && currentUser && user.id === currentUser.id;
 
   useEffect(() => {
@@ -68,40 +68,40 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
           title: "Cardio Workout",
           category: "CARDIO",
           fields: [
-            {name: "workoutName", label: "Workout Name", type: "text", required: true},
-            {name: "description", label: "Description", type: "textarea", required: false},
-            {name: "muscleGroups", label: "Muscle Groups Worked", type: "tags", required: true},
-            {name: "duration", label: "Duration (minutes)", type: "number", required: true},
-            {name: "caloriesBurned", label: "Calories Burned", type: "number", required: false},
-            {name: "intensity", label: "Intensity Level", type: "select", options: ["LOW", "MEDIUM", "HIGH"], required: true}
+            { name: "workoutName", label: "Workout Name", type: "text", required: true },
+            { name: "description", label: "Description", type: "textarea", required: false },
+            { name: "muscleGroups", label: "Muscle Groups Worked", type: "tags", required: true },
+            { name: "duration", label: "Duration (minutes)", type: "number", required: true },
+            { name: "caloriesBurned", label: "Calories Burned", type: "number", required: false },
+            { name: "intensity", label: "Intensity Level", type: "select", options: ["LOW", "MEDIUM", "HIGH"], required: true }
           ]
         },
         {
           title: "Strength Training",
           category: "STRENGTH",
           fields: [
-            {name: "workoutName", label: "Workout Name", type: "text", required: true},
-            {name: "description", label: "Exercises Performed", type: "textarea", required: true},
-            {name: "muscleGroups", label: "Muscle Groups Worked", type: "tags", required: true},
-            {name: "duration", label: "Duration (minutes)", type: "number", required: true},
-            {name: "weightLifted", label: "Total Weight Lifted (kg)", type: "number", required: false},
-            {name: "intensity", label: "Intensity Level", type: "select", options: ["LOW", "MEDIUM", "HIGH"], required: true}
+            { name: "workoutName", label: "Workout Name", type: "text", required: true },
+            { name: "description", label: "Exercises Performed", type: "textarea", required: true },
+            { name: "muscleGroups", label: "Muscle Groups Worked", type: "tags", required: true },
+            { name: "duration", label: "Duration (minutes)", type: "number", required: true },
+            { name: "weightLifted", label: "Total Weight Lifted (kg)", type: "number", required: false },
+            { name: "intensity", label: "Intensity Level", type: "select", options: ["LOW", "MEDIUM", "HIGH"], required: true }
           ]
         },
         {
           title: "Other Activity",
           category: "OTHER",
           fields: [
-            {name: "workoutName", label: "Activity Name", type: "text", required: true},
-            {name: "description", label: "Description", type: "textarea", required: false},
-            {name: "muscleGroups", label: "Muscle Groups Worked", type: "tags", required: true},
-            {name: "duration", label: "Duration (minutes)", type: "number", required: true},
-            {name: "caloriesBurned", label: "Calories Burned", type: "number", required: false},
-            {name: "intensity", label: "Intensity Level", type: "select", options: ["LOW", "MEDIUM", "HIGH"], required: true}
+            { name: "workoutName", label: "Activity Name", type: "text", required: true },
+            { name: "description", label: "Description", type: "textarea", required: false },
+            { name: "muscleGroups", label: "Muscle Groups Worked", type: "tags", required: true },
+            { name: "duration", label: "Duration (minutes)", type: "number", required: true },
+            { name: "caloriesBurned", label: "Calories Burned", type: "number", required: false },
+            { name: "intensity", label: "Intensity Level", type: "select", options: ["LOW", "MEDIUM", "HIGH"], required: true }
           ]
         }
       ];
-      
+
       setTemplates(fitnessTemplates);
     } catch (error) {
       console.error('Error fetching templates:', error);
@@ -111,7 +111,7 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
   const handleAddWorkoutUpdate = async (workoutData) => {
     try {
       const token = localStorage.getItem('token');
-      
+
       if (isEditMode && updateToEdit) {
         const response = await fetch(`${API_BASE_URL}/learning/updates/${updateToEdit.id}`, {
           method: 'PUT',
@@ -127,15 +127,15 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
         }
 
         const data = await response.json();
-        
-        setWorkoutUpdates(prev => 
+
+        setWorkoutUpdates(prev =>
           prev.map(item => item.id === updateToEdit.id ? data.learningUpdate : item)
         );
-        
+
         if (onUserUpdated && data.user) {
           onUserUpdated(data.user);
         }
-        
+
         addToast('Workout update edited successfully!', 'success');
       } else {
         const response = await fetch(`${API_BASE_URL}/learning/updates`, {
@@ -153,11 +153,11 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
 
         const data = await response.json();
         setWorkoutUpdates(prev => [data.learningUpdate, ...prev]);
-        
+
         if (onUserUpdated && data.user) {
           onUserUpdated(data.user);
         }
-        
+
         addToast('Workout update added successfully!', 'success');
       }
     } catch (error) {
@@ -236,7 +236,7 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
 
   const generateAchievements = () => {
     const achievements = [];
-    
+
     if (workoutUpdates.length > 0) {
       achievements.push({
         title: 'First Workout',
@@ -245,32 +245,32 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
         achieved: true
       });
     }
-    
+
     const uniqueMuscleGroups = new Set();
-    workoutUpdates.forEach(update => 
+    workoutUpdates.forEach(update =>
       update.muscleGroups?.forEach(muscle => uniqueMuscleGroups.add(muscle))
     );
-    
+
     achievements.push({
       title: 'Balanced Trainer',
       icon: 'bx-body',
       color: 'text-purple-500',
       achieved: uniqueMuscleGroups.size >= 5
     });
-    
+
     achievements.push({
       title: 'Fitness Addict',
       icon: 'bx-heart',
       color: 'text-blue-500',
       achieved: workoutUpdates.length >= 10
     });
-    
+
     if (workoutUpdates.length >= 2) {
       const dates = workoutUpdates.map(update => new Date(update.completedAt));
       const earliestDate = new Date(Math.min(...dates));
       const latestDate = new Date(Math.max(...dates));
       const daysDifference = Math.floor((latestDate - earliestDate) / (1000 * 60 * 60 * 24));
-      
+
       achievements.push({
         title: 'Consistent Athlete',
         icon: 'bx-calendar-check',
@@ -285,7 +285,7 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
         achieved: false
       });
     }
-    
+
     const totalMinutes = workoutUpdates.reduce((sum, update) => sum + (update.duration || 0), 0);
     achievements.push({
       title: 'Endurance Master',
@@ -293,7 +293,7 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
       color: 'text-pink-500',
       achieved: totalMinutes >= 500
     });
-    
+
     const hasHighIntensity = workoutUpdates.some(update => update.intensity === 'HIGH');
     achievements.push({
       title: 'Intensity Champion',
@@ -301,7 +301,7 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
       color: 'text-red-500',
       achieved: hasHighIntensity
     });
-    
+
     return achievements;
   };
 
@@ -322,8 +322,8 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
         <h2 className="text-lg font-semibold mb-4">Fitness Achievements</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {achievements.map((achievement, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className={`p-4 rounded-lg shadow-sm border text-center ${achievement.achieved ? 'border-gray-200 bg-white' : 'border-gray-100 bg-gray-50 opacity-50'}`}
             >
               <i className={`bx ${achievement.icon} text-3xl ${achievement.achieved ? achievement.color : 'text-gray-400'} mb-2`}></i>
@@ -387,12 +387,12 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
                     </div>
                   )}
                 </div>
-                
+
                 <div className="mt-3">
                   {update.description && (
                     <p className="text-gray-700 mb-3">{update.description}</p>
                   )}
-                  
+
                   <div className="flex flex-wrap gap-2 mb-3">
                     {update.muscleGroups && update.muscleGroups.map((muscle, index) => (
                       <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
@@ -400,7 +400,7 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
                       </span>
                     ))}
                   </div>
-                  
+
                   <div className="flex items-center text-sm text-gray-500 space-x-4">
                     <span className={`flex items-center ${getIntensityColor(update.intensity)}`}>
                       <i className='bx bx-signal-4 mr-1'></i> {update.intensity}
@@ -426,8 +426,8 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
               <i className='bx bx-dumbbell text-5xl text-gray-400'></i>
             </div>
             <p className="mt-2 text-gray-600">
-              {isCurrentUserProfile 
-                ? "You haven't tracked any workouts yet." 
+              {isCurrentUserProfile
+                ? "You haven't tracked any workouts yet."
                 : "This user hasn't shared any workouts yet."}
             </p>
             {isCurrentUserProfile && (
@@ -440,7 +440,7 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
             )}
           </div>
         )}
-        
+
         {workoutUpdates.length > 0 && (
           <div className="mt-6 pt-6 border-t border-gray-200">
             <h3 className="text-md font-semibold mb-4">Workout Summary</h3>
@@ -480,7 +480,7 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
         isEditMode={isEditMode}
         updateToEdit={updateToEdit}
       />
-      
+
       <ConfirmDialog
         isOpen={showDeleteConfirm}
         onClose={() => setShowDeleteConfirm(false)}
