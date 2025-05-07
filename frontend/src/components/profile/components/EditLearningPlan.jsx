@@ -195,7 +195,7 @@ const EditLearningPlan = () => {
     // Mark field as touched
     setTouched((prev) => ({ ...prev, [fieldKey]: true }));
 
-    // Clear error for this field and revalidate
+    // Clear errr
     setErrors((prev) => ({ ...prev, [fieldKey]: '' }));
     validateForm();
   };
