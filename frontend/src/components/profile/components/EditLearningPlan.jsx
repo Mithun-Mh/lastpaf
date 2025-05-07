@@ -65,7 +65,7 @@ const EditLearningPlan = () => {
         }
 
         const data = await response.json();
-        
+
         setFormData({
           title: data.title || '',
           description: data.description || '',
@@ -86,6 +86,7 @@ const EditLearningPlan = () => {
     fetchCurrentUser().then(fetchLearningPlan).finally(() => setIsLoading(false));
   }, [navigate, addToast, id]);
 
+  //validate form
   const validateForm = () => {
     const newErrors = {};
 
