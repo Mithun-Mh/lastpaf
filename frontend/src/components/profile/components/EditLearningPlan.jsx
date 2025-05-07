@@ -21,7 +21,7 @@ const EditLearningPlan = () => {
   const [touched, setTouched] = useState({});
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
   const resourceTypes = ['Video', 'Documentation', 'Article', 'Tutorial', 'Book'];
-
+//add use effect
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
