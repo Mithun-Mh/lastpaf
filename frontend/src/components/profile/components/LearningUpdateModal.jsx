@@ -10,7 +10,7 @@ const FitnessUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode =
     if (isEditMode && updateToEdit) {
       // Find the matching template
       const matchingTemplate = templates.find(template => template.category === updateToEdit.category);
-      
+
       if (matchingTemplate) {
         setSelectedTemplate(matchingTemplate);
         // Pre-fill the form with existing data
@@ -37,7 +37,7 @@ const FitnessUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode =
 
   const handleTemplateSelect = (template) => {
     setSelectedTemplate(template);
-    setFormData({ 
+    setFormData({
       title: template.title,
       category: template.category,
     });
@@ -61,12 +61,12 @@ const FitnessUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode =
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // If in edit mode, preserve the original ID
-    const submissionData = isEditMode && updateToEdit 
+    const submissionData = isEditMode && updateToEdit
       ? { ...formData, id: updateToEdit.id }
       : formData;
-      
+
     onSubmit(submissionData);
     resetForm();
   };
@@ -92,27 +92,26 @@ const FitnessUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode =
           {step === 1 ? (
             <div className="space-y-4">
               <p className="text-gray-600 mb-4">Select the type of workout you completed:</p>
-              
+
               {templates && templates.map((template, index) => (
-                <div 
+                <div
                   key={index}
                   className="p-4 border border-gray-200 rounded-lg hover:border-DarkColor hover:bg-gray-50 cursor-pointer transition-colors"
                   onClick={() => handleTemplateSelect(template)}
                 >
                   <div className="flex items-center">
                     <div className="w-10 h-10 rounded-full bg-DarkColor text-white flex items-center justify-center">
-                      <i className={`bx ${
-                        template.category === 'CARDIO' ? 'bx-run' : 
-                        template.category === 'STRENGTH' ? 'bx-dumbbell' :
-                        'bx-cycling'
-                      } text-xl`}></i>
+                      <i className={`bx ${template.category === 'CARDIO' ? 'bx-run' :
+                          template.category === 'STRENGTH' ? 'bx-dumbbell' :
+                            'bx-cycling'
+                        } text-xl`}></i>
                     </div>
                     <div className="ml-3">
                       <h4 className="font-medium">{template.title}</h4>
                       <p className="text-sm text-gray-500">
-                        {template.category === 'CARDIO' ? 'Track running, cycling, or other cardio workouts' : 
-                         template.category === 'STRENGTH' ? 'Log your strength training and resistance workouts' :
-                         'Record specialized workouts like yoga, swimming, etc.'}
+                        {template.category === 'CARDIO' ? 'Track running, cycling, or other cardio workouts' :
+                          template.category === 'STRENGTH' ? 'Log your strength training and resistance workouts' :
+                            'Record specialized workouts like yoga, swimming, etc.'}
                       </p>
                     </div>
                   </div>
@@ -126,7 +125,7 @@ const FitnessUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode =
                   <label className="block text-sm font-medium text-gray-700">
                     {field.label} {field.required && <span className="text-red-500">*</span>}
                   </label>
-                  
+
                   {field.type === 'text' && (
                     <input
                       type="text"
@@ -136,7 +135,7 @@ const FitnessUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode =
                       required={field.required}
                     />
                   )}
-                  
+
                   {field.type === 'textarea' && (
                     <textarea
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-DarkColor"
@@ -146,7 +145,7 @@ const FitnessUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode =
                       rows={4}
                     />
                   )}
-                  
+
                   {field.type === 'number' && (
                     <input
                       type="number"
@@ -157,7 +156,7 @@ const FitnessUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode =
                       min={0}
                     />
                   )}
-                  
+
                   {field.type === 'select' && (
                     <select
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-DarkColor"
@@ -171,7 +170,7 @@ const FitnessUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode =
                       ))}
                     </select>
                   )}
-                  
+
                   {field.type === 'tags' && (
                     <div>
                       <input
@@ -187,7 +186,7 @@ const FitnessUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode =
                   )}
                 </div>
               ))}
-              
+
               <div className="flex justify-end space-x-3 pt-4">
                 {!isEditMode && (
                   <button
