@@ -537,7 +537,7 @@ const Navbar = ({ user }) => {
                       </button>
                     </div>
                   </div>
-                  
+
                   <div className="max-h-96 overflow-y-auto">
                     {isLoadingNotifications ? (
                       <div className="flex justify-center items-center p-4">
