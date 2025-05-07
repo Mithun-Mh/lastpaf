@@ -1,5 +1,6 @@
 import React from 'react';
 
+// pass properties
 const ConfirmDialog = ({ isOpen, onClose, onConfirm, title, message, confirmText = 'Confirm', cancelText = 'Cancel' }) => {
   if (!isOpen) return null;
 
