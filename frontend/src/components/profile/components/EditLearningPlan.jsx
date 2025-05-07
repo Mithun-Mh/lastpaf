@@ -183,7 +183,7 @@ const EditLearningPlan = () => {
     const { value } = e.target;
     const fieldKey = section ? `${section}${field}${index}` : e.target.name;
 
-    // Update form data
+    // Update data in the form
     if (section) {
       const updatedSection = [...formData[section]];
       updatedSection[index] = { ...updatedSection[index], [field]: value };
