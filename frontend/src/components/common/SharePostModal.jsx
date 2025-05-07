@@ -12,6 +12,7 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
   
   const handleShare = async (e) => {
     e.preventDefault();
+    
     setIsSharing(true);
     
     try {
