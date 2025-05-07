@@ -134,7 +134,7 @@ const EditLearningPlan = () => {
         }
 
         // Resource Type
-        
+
         if (!resource.type) {
           newErrors[`resourceType${index}`] = 'Resource type is required';
         } else if (!resourceTypes.includes(resource.type)) {
@@ -166,7 +166,7 @@ const EditLearningPlan = () => {
           }
         }
 
-        // Week Status
+        // check week status
         if (!week.status) {
           newErrors[`weekStatus${index}`] = 'Week status is required';
         } else if (!['Not Started', 'In Progress', 'Completed'].includes(week.status)) {
