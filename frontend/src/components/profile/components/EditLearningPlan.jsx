@@ -53,7 +53,7 @@ const EditLearningPlan = () => {
       }
     };
 
-    
+
     const fetchLearningPlan = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/learning-plan/${id}`, {
@@ -65,6 +65,7 @@ const EditLearningPlan = () => {
         }
 
         const data = await response.json();
+        
         setFormData({
           title: data.title || '',
           description: data.description || '',
