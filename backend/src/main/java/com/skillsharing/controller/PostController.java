@@ -146,7 +146,7 @@ public class PostController {
         Post post = postRepository.findById(postId)
             .orElseThrow(() -> new RuntimeException("Post not found"));
         
-        // Check if current user is the author of the post
+        // Check if current user is the author of the post with id
         if (!post.getAuthorId().equals(currentUser.getId())) {
             return ResponseEntity.status(403).body("You are not authorized to delete this post");
         }
