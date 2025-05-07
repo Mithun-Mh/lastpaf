@@ -43,7 +43,7 @@ export const ToastProvider = ({ children }) => {
     return id;
   }, []);
 
-  // Function to remove a toast
+  // remove toast
   const removeToast = useCallback((id) => {
     setToasts(prevToasts => prevToasts.filter(toast => toast.id !== id));
   }, []);
