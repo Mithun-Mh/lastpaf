@@ -534,7 +534,7 @@ const Navbar = ({ user }) => {
                         title="Clear all notifications"
                       >
                         Clear all
-                        
+
                       </button>
                     </div>
                   </div>
@@ -574,6 +574,7 @@ const Navbar = ({ user }) => {
                                     }}
                                   >
                                     Mark as read
+                                    
                                   </button>
                                 )}
                               </div>
