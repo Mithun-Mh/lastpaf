@@ -87,11 +87,11 @@ const Profile = () => {
         prevPosts.map((post) =>
           post.id === postId
             ? {
-                ...post,
-                likes: data.liked
-                  ? [...(post.likes || []), currentUser.id]
-                  : (post.likes || []).filter((id) => id !== currentUser.id),
-              }
+              ...post,
+              likes: data.liked
+                ? [...(post.likes || []), currentUser.id]
+                : (post.likes || []).filter((id) => id !== currentUser.id),
+            }
             : post
         )
       );
@@ -625,7 +625,7 @@ const Profile = () => {
                 />
               </div>
             </div>
-            
+
             {/* Learning Streak Section */}
             {user && (
               <div className="bg-white rounded-xl overflow-hidden shadow-md">
@@ -649,18 +649,18 @@ const Profile = () => {
             {/* Post Creation Quick Access */}
             {isCurrentUserProfile && (
               <div className="bg-white rounded-xl p-4 shadow-md flex items-center space-x-4">
-                <img 
-                  src={user?.profilePicture || '/assets/default-avatar.png'} 
-                  alt="Profile" 
+                <img
+                  src={user?.profilePicture || '/assets/default-avatar.png'}
+                  alt="Profile"
                   className="w-10 h-10 rounded-full object-cover"
                 />
-                <button 
+                <button
                   onClick={() => setShowPostModal(true)}
                   className="flex-1 text-left px-4 py-2 bg-gray-100 rounded-full text-gray-500 hover:bg-gray-200 transition-colors"
                 >
                   Share your thoughts or learning progress...
                 </button>
-                <button 
+                <button
                   onClick={() => setShowPostModal(true)}
                   className="p-2 rounded-full text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition-colors shadow-md"
                 >
@@ -668,40 +668,37 @@ const Profile = () => {
                 </button>
               </div>
             )}
-            
+
             {/* Tabs */}
             <div className="bg-white shadow-md rounded-xl overflow-hidden">
               <div className="bg-gradient-to-r from-indigo-50 to-purple-50">
                 <nav className="flex">
                   <button
                     onClick={() => setActiveTab('posts')}
-                    className={`flex-1 py-4 px-6 text-center font-medium text-sm flex items-center justify-center transition-all ${
-                      activeTab === 'posts'
+                    className={`flex-1 py-4 px-6 text-center font-medium text-sm flex items-center justify-center transition-all ${activeTab === 'posts'
                         ? 'bg-white border-t-4 border-indigo-600 text-indigo-700 shadow'
                         : 'text-gray-600 hover:text-indigo-600'
-                    }`}
+                      }`}
                   >
                     <i className={`bx bx-message-square-detail mr-2 text-xl ${activeTab === 'posts' ? 'text-indigo-600' : ''}`}></i>
                     Posts
                   </button>
                   <button
                     onClick={() => setActiveTab('learning')}
-                    className={`flex-1 py-4 px-6 text-center font-medium text-sm flex items-center justify-center transition-all ${
-                      activeTab === 'learning'
+                    className={`flex-1 py-4 px-6 text-center font-medium text-sm flex items-center justify-center transition-all ${activeTab === 'learning'
                         ? 'bg-white border-t-4 border-indigo-600 text-indigo-700 shadow'
                         : 'text-gray-600 hover:text-indigo-600'
-                    }`}
+                      }`}
                   >
                     <i className={`bx bx-book-open mr-2 text-xl ${activeTab === 'learning' ? 'text-indigo-600' : ''}`}></i>
                     Learning
                   </button>
                   <button
                     onClick={() => setActiveTab('achievements')}
-                    className={`flex-1 py-4 px-6 text-center font-medium text-sm flex items-center justify-center transition-all ${
-                      activeTab === 'achievements'
+                    className={`flex-1 py-4 px-6 text-center font-medium text-sm flex items-center justify-center transition-all ${activeTab === 'achievements'
                         ? 'bg-white border-t-4 border-indigo-600 text-indigo-700 shadow'
                         : 'text-gray-600 hover:text-indigo-600'
-                    }`}
+                      }`}
                   >
                     <i className={`bx bx-trophy mr-2 text-xl ${activeTab === 'achievements' ? 'text-indigo-600' : ''}`}></i>
                     Achievements
