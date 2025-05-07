@@ -196,6 +196,7 @@ const EditLearningPlan = () => {
     setTouched((prev) => ({ ...prev, [fieldKey]: true }));
 
     // Clear errr
+    
     setErrors((prev) => ({ ...prev, [fieldKey]: '' }));
     validateForm();
   };
