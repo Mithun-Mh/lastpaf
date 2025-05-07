@@ -24,9 +24,10 @@ public class LearningPlanDTO {
         return id;
     }
 
-    public void setId(String id) { // Add this setter
+    public void setId(String id) {
         this.id = id;
     }
+    
     public String getTitle() {
         return title;
     }
@@ -43,19 +44,19 @@ public class LearningPlanDTO {
         this.description = description;
     }
 
-    // Removed duplicate getResources() method to resolve the error
     public List<ResourceDTO> getResources() {
         return resources;
     }
+    
+    public void setResources(List<ResourceDTO> resources) {
+        this.resources = resources;
+    }
+    
     public List<WeekDTO> getWeeks() {
         return weeks;
     }
     
     public void setWeeks(List<WeekDTO> weeks) {
         this.weeks = weeks;
-    }
-
-    public void setResources(List<ResourceDTO> toList) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
