@@ -109,7 +109,7 @@ const EditLearningPlan = () => {
     }
 
     // Resources validation
-    
+
     if (formData.resources.length === 0) {
       newErrors.resources = 'At least one resource is required';
     } else {
@@ -124,6 +124,7 @@ const EditLearningPlan = () => {
         }
 
         // Resource URL
+        
         if (!resource.url.trim()) {
           newErrors[`resourceUrl${index}`] = 'Resource URL is required';
         } else if (!/^https?:\/\/[^\s$.?#].[^\s]*$/.test(resource.url)) {
