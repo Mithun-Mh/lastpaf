@@ -5,6 +5,7 @@ import DefaultAvatar from '../../assets/avatar.png';
 import { API_BASE_URL } from '../../config/apiConfig';
 import { useToast } from '../common/Toast';
 
+//create states
 const Navbar = ({ user }) => {
   const navigate = useNavigate();
   const { addToast } = useToast();
