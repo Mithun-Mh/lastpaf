@@ -28,5 +28,5 @@ const ConfirmDialog = ({ isOpen, onClose, onConfirm, title, message, confirmText
     </div>
   );
 };
-
+// This component can be used to confirm actions like deleting a comment or post.
 export default ConfirmDialog;
