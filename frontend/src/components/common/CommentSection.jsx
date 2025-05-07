@@ -68,7 +68,7 @@ const CommentSection = ({
     setShowComments(!showComments);
   };
   
-  // Add this to determine if user can delete a comment
+  // Add comment
   const canDeleteComment = (comment) => {
     return currentUser && (
       currentUser.id === comment.userId || 
