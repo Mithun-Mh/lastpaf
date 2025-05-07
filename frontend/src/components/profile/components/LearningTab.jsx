@@ -583,12 +583,12 @@ const FitnessTab = () => {
             {/* My Learning Plans Section */}
             <div>
               <div className={styles.headerContainer}>
-                <h1 className={styles.headerTitle}>My Learning Plans</h1>
+                <h1 className={styles.headerTitle}>My Fitness Plans</h1>
                 <button onClick={() => navigate('/learning-plans/create')} className={styles.createButton}>
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                   </svg>
-                  Create New Plan
+                  Create Fitness Plan
                 </button>
               </div>
 

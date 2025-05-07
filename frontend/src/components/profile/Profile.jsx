@@ -631,7 +631,7 @@ const Profile = () => {
               <div className="bg-white rounded-xl overflow-hidden shadow-md">
                 <div className="bg-gradient-to-r from-green-500 to-teal-500 px-6 py-4">
                   <h2 className="text-white text-xl font-semibold flex items-center">
-                    <i className='bx bx-line-chart mr-2'></i> Learning Progress
+                    <i className='bx bx-line-chart mr-2'></i> Working Progress
                   </h2>
                 </div>
                 <div className="p-6">
@@ -693,7 +693,7 @@ const Profile = () => {
                     }`}
                   >
                     <i className={`bx bx-book-open mr-2 text-xl ${activeTab === 'learning' ? 'text-indigo-600' : ''}`}></i>
-                    Learning
+                    Working Progress
                   </button>
                   <button
                     onClick={() => setActiveTab('achievements')}
@@ -798,7 +798,7 @@ const Profile = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center">
             <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-3">
-              Fitness Hub
+              FitSphere
             </div>
             <div className="flex space-x-4 mb-4">
               <a href="#" className="text-gray-400 hover:text-indigo-600 transition-colors">

@@ -407,7 +407,7 @@ const Navbar = ({ user }) => {
               className="text-ExtraDarkColor text-xl font-bold cursor-pointer mr-6"
               onClick={() => navigate('/dashboard')}
             >
-              Fitness Hub
+              FitSphere
             </span>
             
             {/* Search Bar */}
