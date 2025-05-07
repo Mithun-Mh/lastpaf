@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import 'boxicons/css/boxicons.min.css';
 
-// Create the toast context
+// Create the toast 
 const ToastContext = createContext();
 
 // Toast types and their respective colors and icons
