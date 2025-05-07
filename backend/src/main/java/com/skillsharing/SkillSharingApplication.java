@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 @SpringBootApplication
 @EnableMongoAuditing
-@ComponentScan(basePackages = {"com.skillsharing"})
+@ComponentScan(basePackages = {"com.skillsharing"})/*mithun */
 public class SkillSharingApplication {
     private final RequestMappingHandlerMapping requestMappingHandlerMapping;
     private final MongoTemplate mongoTemplate;
