@@ -18,7 +18,7 @@ const CommentSection = ({
   const { addToast } = useToast();
   const navigate = useNavigate();
   
-  // Add state for confirm dialog
+  // Add dialog
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [commentToDelete, setCommentToDelete] = useState(null);
   
