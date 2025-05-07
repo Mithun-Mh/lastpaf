@@ -102,7 +102,7 @@ const SinglePostView = () => {
   // Handle like post
   const handleLikePost = async () => {
     if (!post) return;
-    
+
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(`${API_BASE_URL}/posts/${post.id}/like`, {
@@ -117,15 +117,15 @@ const SinglePostView = () => {
       }
 
       const data = await response.json();
-      
+
       // Update post likes in state
       setPost(prev => {
         if (!prev) return prev;
-        
+
         return {
           ...prev,
-          likes: data.liked 
-            ? [...(prev.likes || []), currentUser.id] 
+          likes: data.liked
+            ? [...(prev.likes || []), currentUser.id]
             : (prev.likes || []).filter(id => id !== currentUser.id)
         };
       });
@@ -154,7 +154,7 @@ const SinglePostView = () => {
           <div className="bg-white p-8 rounded-lg shadow-lg">
             <h2 className="text-xl text-red-600 font-semibold mb-4">Error</h2>
             <p>{error || 'Post not found'}</p>
-            <button 
+            <button
               onClick={() => navigate('/dashboard')}
               className="mt-4 px-4 py-2 bg-DarkColor text-white rounded-md hover:bg-ExtraDarkColor"
             >
@@ -169,19 +169,19 @@ const SinglePostView = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar user={currentUser} />
-      
+
       <div className="max-w-3xl mx-auto my-8 px-4">
         <div className="bg-white rounded-lg shadow-md p-6">
           {/* Post Author */}
           <div className="flex items-center mb-4">
-            <img 
-              src={post.authorProfilePicture || DefaultAvatar} 
+            <img
+              src={post.authorProfilePicture || DefaultAvatar}
               alt={post.authorUsername}
               className="h-10 w-10 rounded-full object-cover cursor-pointer"
               onClick={() => navigate(`/profile/${post.authorId}`)}
             />
             <div className="ml-3">
-              <p 
+              <p
                 className="font-medium text-gray-800 cursor-pointer hover:underline"
                 onClick={() => navigate(`/profile/${post.authorId}`)}
               >
@@ -192,63 +192,61 @@ const SinglePostView = () => {
               <p className="text-xs text-gray-500">{formatPostDate(post.createdAt)}</p>
             </div>
           </div>
-          
+
           {/* Post Content */}
           <div className="mb-4">
             <p className="text-gray-800 whitespace-pre-line">{post.content}</p>
           </div>
-          
+
           {/* Post Media */}
           {post.mediaUrl && (
             <div className="mb-4 rounded-lg overflow-hidden">
               {post.mediaType === 'IMAGE' ? (
-                <img 
-                  src={post.mediaUrl} 
-                  alt="Post media" 
+                <img
+                  src={post.mediaUrl}
+                  alt="Post media"
                   className="w-full h-auto"
                 />
               ) : (
-                <video 
-                  src={post.mediaUrl} 
-                  controls 
+                <video
+                  src={post.mediaUrl}
+                  controls
                   className="w-full h-auto"
                 />
               )}
             </div>
           )}
-          
+
           {/* Post Actions */}
           <div className="flex justify-between items-center pt-3 border-t border-gray-200">
-            <button 
-              className={`flex items-center ${
-                post.likes && currentUser && post.likes.includes(currentUser.id) 
-                  ? 'text-blue-500 font-medium' 
+            <button
+              className={`flex items-center ${post.likes && currentUser && post.likes.includes(currentUser.id)
+                  ? 'text-blue-500 font-medium'
                   : 'text-gray-500 hover:text-DarkColor'
-              }`}
+                }`}
               onClick={handleLikePost}
             >
-              <i className={`bx ${
-                post.likes && currentUser && post.likes.includes(currentUser.id) 
-                  ? 'bxs-like' 
+              <i className={`bx ${post.likes && currentUser && post.likes.includes(currentUser.id)
+                  ? 'bxs-like'
                   : 'bx-like'
-              } mr-1`}></i> {post.likes ? post.likes.length : 0} Likes
+                } mr-1`}></i> {post.likes ? post.likes.length : 0} Likes
             </button>
             <button className="flex items-center text-gray-500 hover:text-DarkColor">
               <i className='bx bx-comment mr-1'></i> {post.comments?.length || 0} Comments
             </button>
           </div>
-          
+
           {/* Comments Section */}
-          <CommentSection 
+          <CommentSection
             post={post}
             currentUser={currentUser}
             formatTime={formatPostDate}
             onCommentAdded={handlePostUpdated}
           />
         </div>
-        
+
         <div className="mt-4">
-          <button 
+          <button
             onClick={() => navigate(-1)}
             className="flex items-center text-gray-600 hover:text-DarkColor"
           >
