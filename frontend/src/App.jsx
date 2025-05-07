@@ -18,6 +18,7 @@ function App() {
     <ToastProvider>
       <Router>
         <Routes>
+        
           <Route path="/auth" element={<Auth />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} /> {/* Current user profile */}
