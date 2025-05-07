@@ -124,7 +124,7 @@ const EditLearningPlan = () => {
         }
 
         // Resource URL
-        
+
         if (!resource.url.trim()) {
           newErrors[`resourceUrl${index}`] = 'Resource URL is required';
         } else if (!/^https?:\/\/[^\s$.?#].[^\s]*$/.test(resource.url)) {
@@ -134,6 +134,7 @@ const EditLearningPlan = () => {
         }
 
         // Resource Type
+        
         if (!resource.type) {
           newErrors[`resourceType${index}`] = 'Resource type is required';
         } else if (!resourceTypes.includes(resource.type)) {
