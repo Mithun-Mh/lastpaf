@@ -89,6 +89,9 @@ const CommentSection = ({
       console.warn('onCommentDeleted prop is not a function');
     }
     setShowConfirmDialog(false);
+
+
+    
     setCommentToDelete(null);
   };
   
