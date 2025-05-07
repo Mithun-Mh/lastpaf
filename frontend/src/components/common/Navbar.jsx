@@ -534,6 +534,7 @@ const Navbar = ({ user }) => {
                         title="Clear all notifications"
                       >
                         Clear all
+                        
                       </button>
                     </div>
                   </div>
