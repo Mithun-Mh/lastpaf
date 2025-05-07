@@ -47,7 +47,7 @@ export const ToastProvider = ({ children }) => {
   const removeToast = useCallback((id) => {
     setToasts(prevToasts => prevToasts.filter(toast => toast.id !== id));
   }, []);
-  
+
 
   return (
     <ToastContext.Provider value={{ addToast, removeToast }}>
@@ -74,6 +74,7 @@ export const ToastProvider = ({ children }) => {
     </ToastContext.Provider>
   );
 };
+
 
 // Custom hook to use the toast
 export const useToast = () => {
