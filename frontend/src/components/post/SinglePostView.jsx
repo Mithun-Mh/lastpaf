@@ -139,7 +139,7 @@ const SinglePostView = () => {
     return (
       <div>
         <Navbar user={currentUser} />
-        
+
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-DarkColor"></div>
         </div>
@@ -195,6 +195,7 @@ const SinglePostView = () => {
           </div>
           
           {/* Post Content */}
+          
           <div className="mb-4">
             <p className="text-gray-800 whitespace-pre-line">{post.content}</p>
           </div>
