@@ -3,6 +3,7 @@ import { API_BASE_URL } from '../../config/apiConfig';
 import DefaultAvatar from '../../assets/avatar.png';
 import { useToast } from './Toast';
 
+// import { useNavigate } from 'react-router-dom';
 const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
   const [shareMessage, setShareMessage] = useState('');
   const [isSharing, setIsSharing] = useState(false);
