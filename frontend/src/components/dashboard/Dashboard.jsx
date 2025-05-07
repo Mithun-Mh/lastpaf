@@ -16,7 +16,7 @@ const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   // Post state
   const [posts, setPosts] = useState([]);
   const [isLoadingPosts, setIsLoadingPosts] = useState(false);
@@ -213,17 +213,17 @@ const Dashboard = () => {
       }
 
       const data = await response.json();
-      
+
       // Update post likes in state
-      setPosts(prevPosts => 
-        prevPosts.map(post => 
-          post.id === postId 
-            ? { 
-                ...post, 
-                likes: data.liked 
-                  ? [...(post.likes || []), user.id] 
-                  : (post.likes || []).filter(id => id !== user.id)
-              } 
+      setPosts(prevPosts =>
+        prevPosts.map(post =>
+          post.id === postId
+            ? {
+              ...post,
+              likes: data.liked
+                ? [...(post.likes || []), user.id]
+                : (post.likes || []).filter(id => id !== user.id)
+            }
             : post
         )
       );
@@ -241,8 +241,8 @@ const Dashboard = () => {
 
   // Add this handler to update posts when comments are added
   const handlePostUpdated = (updatedPost) => {
-    setPosts(prevPosts => 
-      prevPosts.map(post => 
+    setPosts(prevPosts =>
+      prevPosts.map(post =>
         post.id === updatedPost.id ? updatedPost : post
       )
     );
@@ -264,12 +264,12 @@ const Dashboard = () => {
       }
 
       const data = await response.json();
-      
+
       // Update the posts state with the updated post
       if (data.post) {
         handlePostUpdated(data.post);
       }
-      
+
       addToast('Comment deleted successfully', 'success');
     } catch (error) {
       console.error('Error deleting comment:', error);
@@ -297,10 +297,10 @@ const Dashboard = () => {
       if (!response.ok) {
         throw new Error('Failed to delete post');
       }
-      
+
       // Remove the post from state
       setPosts(prevPosts => prevPosts.filter(post => post.id !== postToDelete));
-      
+
       addToast('Post deleted successfully', 'success');
     } catch (error) {
       console.error('Error deleting post:', error);
@@ -325,7 +325,7 @@ const Dashboard = () => {
         <div className="bg-white p-8 rounded-lg shadow-md">
           <h2 className="text-xl text-red-600 font-semibold mb-4">Error</h2>
           <p>{error}</p>
-          <button 
+          <button
             onClick={() => window.location.reload()}
             className="mt-4 px-4 py-2 bg-DarkColor text-white rounded-md hover:bg-ExtraDarkColor"
           >
@@ -343,18 +343,18 @@ const Dashboard = () => {
 
       <div className="max-w-3xl mx-auto mt-6 px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold text-ExtraDarkColor mb-6">Dashboard</h1>
-        
+
         {/* Post Creation Form */}
         <div className="bg-white shadow rounded-lg p-4 mb-6">
           <div className="flex items-center mb-4">
-            <img 
-              src={user?.profilePicture || DefaultAvatar} 
-              alt={user?.username} 
+            <img
+              src={user?.profilePicture || DefaultAvatar}
+              alt={user?.username}
               className="h-10 w-10 rounded-full object-cover"
             />
             <h2 className="ml-3 font-semibold">Create Post</h2>
           </div>
-          
+
           <form onSubmit={handleCreatePost}>
             <textarea
               value={postContent}
@@ -363,19 +363,19 @@ const Dashboard = () => {
               rows="3"
               placeholder="What's on your mind?"
             ></textarea>
-            
+
             {postMediaPreview && (
               <div className="mt-3 relative">
                 {postMedia?.type.startsWith('image') ? (
-                  <img 
-                    src={postMediaPreview} 
-                    alt="Preview" 
+                  <img
+                    src={postMediaPreview}
+                    alt="Preview"
                     className="w-full max-h-96 object-contain rounded-lg"
                   />
                 ) : (
-                  <video 
-                    src={postMediaPreview} 
-                    controls 
+                  <video
+                    src={postMediaPreview}
+                    controls
                     className="w-full max-h-96 object-contain rounded-lg"
                   />
                 )}
@@ -391,7 +391,7 @@ const Dashboard = () => {
                 </button>
               </div>
             )}
-            
+
             <div className="flex justify-between items-center mt-3 pt-3 border-t border-gray-200">
               <div>
                 <input
@@ -406,19 +406,18 @@ const Dashboard = () => {
                   onClick={() => postFileInputRef.current?.click()}
                   className="flex items-center text-gray-700 hover:text-DarkColor transition-colors px-3 py-1 rounded-md hover:bg-gray-100"
                 >
-                  <i className='bx bx-image text-green-500 text-xl mr-1'></i> 
+                  <i className='bx bx-image text-green-500 text-xl mr-1'></i>
                   <span>Photo/Video</span>
                 </button>
               </div>
-              
+
               <button
                 type="submit"
                 disabled={isSubmittingPost || (!postContent.trim() && !postMedia)}
-                className={`px-4 py-2 rounded-lg ${
-                  isSubmittingPost || (!postContent.trim() && !postMedia)
+                className={`px-4 py-2 rounded-lg ${isSubmittingPost || (!postContent.trim() && !postMedia)
                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     : 'bg-DarkColor text-white hover:bg-ExtraDarkColor'
-                } transition-colors`}
+                  } transition-colors`}
               >
                 {isSubmittingPost ? (
                   <div className="flex items-center">
@@ -430,7 +429,7 @@ const Dashboard = () => {
             </div>
           </form>
         </div>
-        
+
         {/* Posts Feed */}
         <div className="space-y-4">
           {isLoadingPosts ? (
@@ -443,28 +442,28 @@ const Dashboard = () => {
               <div key={post.id} className="bg-white p-4 rounded-lg shadow">
                 <div className="flex items-center mb-3 justify-between">
                   <div className="flex items-center">
-                    <img 
-                      src={post.authorProfilePicture || DefaultAvatar} 
-                      alt={post.authorUsername} 
+                    <img
+                      src={post.authorProfilePicture || DefaultAvatar}
+                      alt={post.authorUsername}
                       className="h-10 w-10 rounded-full object-cover"
                     />
                     <div className="ml-3">
-                      <div 
+                      <div
                         className="font-medium text-gray-800 cursor-pointer hover:underline"
                         onClick={() => navigate(`/profile/${post.authorId}`)}
                       >
-                        {post.authorFirstName && post.authorLastName 
+                        {post.authorFirstName && post.authorLastName
                           ? `${post.authorFirstName} ${post.authorLastName}`
                           : post.authorFirstName || post.authorLastName || post.authorUsername}
                       </div>
                       <p className="text-xs text-gray-500">{formatPostDate(post.createdAt)}</p>
                     </div>
                   </div>
-                  
+
                   {/* Add post delete option - only shown for post author */}
                   {user && post.authorId === user.id && (
                     <div className="relative group">
-                      <button 
+                      <button
                         className="text-gray-400 hover:text-red-500 p-1 rounded-full hover:bg-gray-100"
                         onClick={() => handleDeletePost(post.id)}
                         title="Delete post"
@@ -474,67 +473,65 @@ const Dashboard = () => {
                     </div>
                   )}
                 </div>
-                
+
                 {/* Show if this is a shared post */}
                 {post.originalPostId && (
                   <div className="mb-3 px-3 py-2 bg-gray-50 rounded-md border-l-4 border-DarkColor">
                     <p className="text-sm font-medium text-gray-600">
-                      <i className='bx bx-share bx-flip-horizontal mr-1'></i> 
+                      <i className='bx bx-share bx-flip-horizontal mr-1'></i>
                       {post.shareMessage ? post.shareMessage : "Shared a post"}
                     </p>
                   </div>
                 )}
-                
+
                 <div className="mb-3">
                   <p className="text-gray-800 whitespace-pre-line">{post.content}</p>
                 </div>
-                
+
                 {post.mediaUrl && (
                   <div className="mb-3 rounded-lg overflow-hidden">
                     {post.mediaType === 'IMAGE' ? (
-                      <img 
-                        src={post.mediaUrl} 
-                        alt="Post media" 
+                      <img
+                        src={post.mediaUrl}
+                        alt="Post media"
                         className="w-full h-auto"
                       />
                     ) : (
-                      <video 
-                        src={post.mediaUrl} 
-                        controls 
+                      <video
+                        src={post.mediaUrl}
+                        controls
                         className="w-full h-auto"
                       />
                     )}
                   </div>
                 )}
-                
+
                 <div className="flex justify-between items-center pt-3 border-t border-gray-200">
-                  <button 
-                    className={`flex items-center ${
-                      post.likes && post.likes.includes(user.id) 
-                        ? 'text-blue-500 font-medium' 
+                  <button
+                    className={`flex items-center ${post.likes && post.likes.includes(user.id)
+                        ? 'text-blue-500 font-medium'
                         : 'text-gray-500 hover:text-DarkColor'
-                    }`}
+                      }`}
                     onClick={() => handleLikePost(post.id)}
                   >
-                    <i className={`bx ${
-                      post.likes && post.likes.includes(user.id) 
-                        ? 'bxs-like' 
+                    <i className={`bx ${post.likes && post.likes.includes(user.id)
+                        ? 'bxs-like'
                         : 'bx-like'
-                    } mr-1`}></i> {post.likes ? post.likes.length : 0} Likes
+                      } mr-1`}></i> {post.likes ? post.likes.length : 0} Likes
                   </button>
                   <button className="flex items-center text-gray-500 hover:text-DarkColor">
                     <i className='bx bx-comment mr-1'></i> {post.comments ? post.comments.length : 0} Comments
                   </button>
-                  <button 
+                  <button
                     className="flex items-center text-gray-500 hover:text-DarkColor"
                     onClick={() => handleOpenShareModal(post)}
                   >
-                    <i className='bx bx-share bx-flip-horizontal mr-1'></i> 
+                    <i className='bx bx-share bx-flip-horizontal mr-1'></i>
                     {post.shares ? post.shares.length : 0} Shares
                   </button>
                 </div>
-                
-                <CommentSection 
+
+                <CommentSection
                   post={post}
                   currentUser={user}
                   formatTime={formatPostDate}
@@ -551,7 +548,7 @@ const Dashboard = () => {
           )}
         </div>
       </div>
-      
+
       {/* Share Modal */}
       <SharePostModal
         isOpen={showShareModal}
