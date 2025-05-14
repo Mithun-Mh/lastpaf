@@ -39,12 +39,12 @@ public class LearningController {
     private final LearningUpdateRepository learningUpdateRepository;
     private final UserRepository userRepository;
     
-    // Get learning update templates
+    // Get learning update
     @GetMapping("/templates")
     public ResponseEntity<?> getLearningTemplates() {
         Map<String, Object> response = new HashMap<>();
         
-        // Tutorial completion template
+        // tute completion template
         Map<String, Object> tutorialTemplate = new HashMap<>();
         tutorialTemplate.put("title", "Completed a Tutorial");
         tutorialTemplate.put("category", "TUTORIAL");
