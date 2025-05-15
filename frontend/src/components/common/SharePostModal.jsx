@@ -145,6 +145,7 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
             </div>
           </div>
 
+          {/* Buttons: Cancel and Share */}
           <div className="p-4 border-t border-gray-200 flex justify-end">
             <button
               type="button"
