@@ -108,7 +108,7 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
               placeholder="Write something about this post..."
             ></textarea>
 
-            {/* Original Post Preview */}
+            {/* Displays a preview of the original post */}
             <div className="mt-4 p-3 border border-gray-200 rounded-lg bg-gray-50">
               <div className="flex items-center mb-2">
                 <img
