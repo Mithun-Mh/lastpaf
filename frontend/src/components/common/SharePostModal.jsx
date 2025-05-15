@@ -130,6 +130,7 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
               {/* Post Content */}
               <p className="text-sm text-gray-800 line-clamp-3">{post.content}</p>
 
+              {/* Post Media */}
               {post.mediaUrl && (
                 <div className="mt-2 h-32 overflow-hidden rounded-md">
                   {post.mediaType === 'IMAGE' ? (
