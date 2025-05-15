@@ -127,6 +127,7 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
                 </div>
               </div>
 
+              {/* Post Content */}
               <p className="text-sm text-gray-800 line-clamp-3">{post.content}</p>
 
               {post.mediaUrl && (
