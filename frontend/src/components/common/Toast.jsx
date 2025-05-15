@@ -74,7 +74,8 @@ export const ToastProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use the toast
+// Custom hook to use the Toast context
+// This hook allows components to easily access the toast context
 export const useToast = () => {
   const context = useContext(ToastContext);
   if (!context) {
