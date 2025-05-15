@@ -181,7 +181,7 @@ const Dashboard = () => {
     }
   };
 
-  // Function to format post date
+  // Converts a date string into a human-readable "time ago" format
   const formatPostDate = (dateString) => {
     const date = new Date(dateString);
     const now = new Date();
