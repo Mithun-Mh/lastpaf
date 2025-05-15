@@ -85,6 +85,7 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
 
         <form onSubmit={handleShare}>
           <div className="p-4">
+            {/* User Profile Picture and Name */}
             <div className="flex items-center mb-4">
               <img
                 src={currentUser?.profilePicture || DefaultAvatar}
