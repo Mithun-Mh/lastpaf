@@ -34,6 +34,7 @@ const Dashboard = () => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
 
+  // Fetch user profile data and posts
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
