@@ -81,6 +81,7 @@ const Dashboard = () => {
     }
   }, [user]);
 
+  // Fetch posts from the API
   const fetchPosts = async () => {
     setIsLoadingPosts(true);
     try {
