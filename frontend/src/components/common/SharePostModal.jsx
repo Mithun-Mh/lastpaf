@@ -110,6 +110,8 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
 
             {/* Displays a preview of the original post */}
             <div className="mt-4 p-3 border border-gray-200 rounded-lg bg-gray-50">
+
+              {/* Post Author */}
               <div className="flex items-center mb-2">
                 <img
                   src={post.authorProfilePicture || DefaultAvatar}
