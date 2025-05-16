@@ -63,7 +63,7 @@ const SinglePostView = () => {
         }
 
         const data = await response.json();
-        setPost(data);
+        setPost(data); // Set post data
       } catch (error) {
         console.error('Error fetching post:', error);
         setError('Failed to load post');
