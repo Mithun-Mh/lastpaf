@@ -68,7 +68,7 @@ const SinglePostView = () => {
         console.error('Error fetching post:', error);
         setError('Failed to load post');
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); //Hide loader
       }
     };
 
