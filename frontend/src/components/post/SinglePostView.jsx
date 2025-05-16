@@ -136,6 +136,7 @@ const SinglePostView = () => {
     }
   };
 
+  // Show loading spinner while fetching data
   if (isLoading) {
     return (
       <div>
