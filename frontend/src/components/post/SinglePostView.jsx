@@ -148,6 +148,7 @@ const SinglePostView = () => {
     );
   }
 
+  // Show error message if post loading fails
   if (error || !post) {
     return (
       <div>
