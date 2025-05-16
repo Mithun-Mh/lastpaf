@@ -7,6 +7,7 @@ import CommentSection from '../common/CommentSection';
 import { useToast } from '../common/Toast';
 
 const SinglePostView = () => {
+  // Get postId from URL parameters
   const { postId } = useParams();
   const navigate = useNavigate();
   const { addToast } = useToast();
