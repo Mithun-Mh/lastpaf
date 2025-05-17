@@ -2,7 +2,8 @@ spring:
   data:
     mongodb:
     
-      uri: mongodb+srv://IT22548696:Lasal123@codingsocial.nxvtupz.mongodb.net/fitness?retryWrites=true&w=majority
+      # uri: mongodb+srv://IT22548696:Lasal123@codingsocial.nxvtupz.mongodb.net/fitness?retryWrites=true&w=majority
+      uri: mongodb+srv://IT22548696:Lasal123@codingsocial.nxvtupz.mongodb.net/fitness?retryWrites=true&w=majority&socketTimeoutMS=10000&connectTimeoutMS=10000
       database: fitness
   security:
     jwt:
