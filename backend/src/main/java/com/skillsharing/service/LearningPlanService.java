@@ -37,6 +37,7 @@ public class LearningPlanService {
                     Resource resource = new Resource();
                     resource.setTitle(resourceDTO.getTitle());
                     resource.setUrl(resourceDTO.getUrl());
+                    resource.setType(resourceDTO.getType());
                     return resource;
                 })
                 .toList()
@@ -47,6 +48,7 @@ public class LearningPlanService {
                     Week week = new Week();
                     week.setTitle(weekDTO.getTitle());
                     week.setDescription(weekDTO.getDescription());
+                    week.setStatus(weekDTO.getStatus());
                     return week;
                 })
                 .toList()
@@ -57,23 +59,16 @@ public class LearningPlanService {
     public LearningPlan updateLearningPlan(String id, LearningPlanDTO learningPlanDTO) {
         return learningPlanRepository.findById(id)
                 .map(existingPlan -> {
-                    existingPlan.setResources(
-                        learningPlanDTO.getResources().stream()
-                            .map(resourceDTO -> {
-                                Resource resource = new Resource();
-                                resource.setTitle(resourceDTO.getTitle());
-                                resource.setUrl(resourceDTO.getUrl());
-                                return resource;
-                            })
-                            .toList()
-                    );
+                    existingPlan.setTitle(learningPlanDTO.getTitle());
                     existingPlan.setDescription(learningPlanDTO.getDescription());
+                    // Set resources only once
                     existingPlan.setResources(
                         learningPlanDTO.getResources().stream()
                             .map(resourceDTO -> {
                                 Resource resource = new Resource();
                                 resource.setTitle(resourceDTO.getTitle());
                                 resource.setUrl(resourceDTO.getUrl());
+                                resource.setType(resourceDTO.getType());
                                 return resource;
                             })
                             .toList()
@@ -84,6 +79,7 @@ public class LearningPlanService {
                                 Week week = new Week();
                                 week.setTitle(weekDTO.getTitle());
                                 week.setDescription(weekDTO.getDescription());
+                                week.setStatus(weekDTO.getStatus());
                                 return week;
                             })
                             .toList()
