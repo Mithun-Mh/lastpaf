@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -133,7 +134,7 @@ public class PostController {
             logger.error("Error fetching post by ID: {}", postId, e);
             return ResponseEntity.notFound().build();
         }
-    }/*adding putMapping */
+    }
     
     @DeleteMapping("/{postId}")
     public ResponseEntity<?> deletePost(@PathVariable String postId) {
@@ -146,7 +147,7 @@ public class PostController {
         Post post = postRepository.findById(postId)
             .orElseThrow(() -> new RuntimeException("Post not found"));
         
-        // Check if current user is the author of the post with id
+        // Check if current user is the author of the post
         if (!post.getAuthorId().equals(currentUser.getId())) {
             return ResponseEntity.status(403).body("You are not authorized to delete this post");
         }
@@ -213,6 +214,179 @@ public class PostController {
         
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Comment deleted successfully");
+        response.put("post", updatedPost);
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    /**
+     * Edit a comment on a post
+     */
+    @PutMapping("/{postId}/comments/{commentId}")
+    public ResponseEntity<?> editComment(
+            @PathVariable String postId,
+            @PathVariable String commentId,
+            @RequestBody Map<String, String> commentData) {
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        
+        User currentUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        Optional<Post> postOpt = postRepository.findById(postId);
+        
+        if (postOpt.isEmpty()) {
+            logger.warn("Attempt to edit comment on non-existent post: {}", postId);
+            return ResponseEntity.notFound().build();
+        }
+        
+        Post post = postOpt.get();
+        
+        // Find the comment to edit
+        Optional<Post.Comment> commentOpt = post.getComments().stream()
+                .filter(c -> c.getId().equals(commentId))
+                .findFirst();
+                
+        if (commentOpt.isEmpty()) {
+            logger.warn("Attempt to edit non-existent comment: {}", commentId);
+            return ResponseEntity.notFound().build();
+        }
+        
+        Post.Comment comment = commentOpt.get();
+        
+        // Verify that the current user is the author of the comment
+        if (!comment.getUserId().equals(currentUser.getId())) {
+            logger.warn("User {} attempted to edit comment {} created by {}", 
+                    currentUser.getId(), commentId, comment.getUserId());
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", "You are not authorized to edit this comment");
+            return ResponseEntity.status(403).body(errorResponse);
+        }
+        
+        // Update the comment content
+        String newContent = commentData.get("content");
+        if (newContent == null || newContent.trim().isEmpty()) {
+            logger.warn("Attempt to update comment with empty content");
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Comment content cannot be empty");
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+        
+        // Create a new list of comments to avoid modification issues
+        List<Post.Comment> updatedComments = new ArrayList<>();
+        
+        for (Post.Comment c : post.getComments()) {
+            if (c.getId().equals(commentId)) {
+                // Create a new comment with updated values to ensure proper modification
+                Post.Comment updatedComment = Post.Comment.builder()
+                    .id(c.getId())
+                    .userId(c.getUserId())
+                    .username(c.getUsername())
+                    .userProfilePicture(c.getUserProfilePicture())
+                    .content(newContent)
+                    .createdAt(c.getCreatedAt())
+                    .updatedAt(LocalDateTime.now())
+                    .edited(true)
+                    .build();
+                updatedComments.add(updatedComment);
+            } else {
+                updatedComments.add(c);
+            }
+        }
+        
+        post.setComments(updatedComments);
+        
+        Post updatedPost = postRepository.save(post);
+        logger.info("Comment {} updated successfully for post {}", commentId, postId);
+        
+        // Create response with updated post
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Comment updated successfully");
+        response.put("post", updatedPost);
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    /**
+     * Add a comment to a post
+     */
+    @PostMapping("/{postId}/comments")
+    public ResponseEntity<?> addComment(
+            @PathVariable String postId,
+            @RequestBody Map<String, String> commentData) {
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        
+        User currentUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        Optional<Post> postOpt = postRepository.findById(postId);
+        
+        if (postOpt.isEmpty()) {
+            logger.warn("Attempt to comment on non-existent post: {}", postId);
+            return ResponseEntity.notFound().build();
+        }
+        
+        Post post = postOpt.get();
+        
+        String content = commentData.get("content");
+        if (content == null || content.trim().isEmpty()) {
+            logger.warn("Attempt to add empty comment");
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Comment content cannot be empty");
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+        
+        Post.Comment comment = Post.Comment.builder()
+            .id(UUID.randomUUID().toString())
+            .userId(currentUser.getId())
+            .username(currentUser.getUsername())
+            .userProfilePicture(currentUser.getProfilePicture())
+            .content(content)
+            .createdAt(LocalDateTime.now())
+            .updatedAt(LocalDateTime.now()) // Initialize updatedAt when creating
+            .edited(false)  // Initialize edited flag as false
+            .build();
+        
+        if (post.getComments() == null) {
+            post.setComments(new ArrayList<>());
+        }
+        
+        post.getComments().add(comment);
+        Post updatedPost = postRepository.save(post);
+        
+        // Create notification if this isn't the user's own post
+        if (!post.getAuthorId().equals(currentUser.getId())) {
+            try {
+                Notification notification = new Notification();
+                notification.setUserId(post.getAuthorId());
+                notification.setSenderId(currentUser.getId());
+                notification.setSenderUsername(currentUser.getUsername());
+                notification.setSenderProfilePicture(currentUser.getProfilePicture());
+                notification.setType("COMMENT");
+                notification.setResourceId(post.getId());
+                
+                // Use full name in notification message
+                String commenterName = currentUser.getFirstName() != null && currentUser.getLastName() != null
+                    ? currentUser.getFirstName() + " " + currentUser.getLastName()
+                    : currentUser.getUsername();
+                
+                notification.setMessage(commenterName + " commented on your post");
+                notification.setRead(false);
+                notification.setCreatedAt(LocalDateTime.now());
+                
+                notificationRepository.save(notification);
+            } catch (Exception e) {
+                // Log but don't fail the comment if notification fails
+                logger.error("Failed to create notification for comment", e);
+            }
+        }
+        
+        // Create response with updated post
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Comment added successfully");
         response.put("post", updatedPost);
         
         return ResponseEntity.ok(response);
@@ -435,6 +609,67 @@ public class PostController {
             errorResponse.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
+    }
+    
+    /**
+     * Edit a post
+     */
+    @PutMapping("/{postId}")
+    public ResponseEntity<?> editPost(
+            @PathVariable String postId,
+            @RequestBody Map<String, Object> postData) {
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        
+        User currentUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        Optional<Post> postOptional = postRepository.findById(postId);
+        
+        if (postOptional.isEmpty()) {
+            logger.warn("Attempt to edit non-existent post: {}", postId);
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Post not found");
+            return ResponseEntity.status(404).body(errorResponse);
+        }
+        
+        Post post = postOptional.get();
+        
+        // Verify that the current user is the author of the post
+        if (!post.getAuthorId().equals(currentUser.getId())) {
+            logger.warn("User {} attempted to edit post {} created by {}", 
+                    currentUser.getId(), postId, post.getAuthorId());
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", "You are not authorized to edit this post");
+            return ResponseEntity.status(403).body(errorResponse);
+        }
+        
+        // Update the post content
+        String newContent = (String) postData.get("content");
+        if (newContent == null || newContent.trim().isEmpty()) {
+            logger.warn("Attempt to update post with empty content");
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Post content cannot be empty");
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+        
+        post.setContent(newContent);
+        
+        // Update media if provided
+        if (postData.containsKey("mediaUrl")) {
+            post.setMediaUrl((String) postData.get("mediaUrl"));
+            post.setMediaType((String) postData.get("mediaType"));
+        }
+        
+        // Mark as edited and update timestamp
+        post.setEdited(true);
+        post.setUpdatedAt(LocalDateTime.now());
+        
+        Post updatedPost = postRepository.save(post);
+        logger.info("Post {} updated by user {}", postId, currentUser.getId());
+        
+        return ResponseEntity.ok(updatedPost);
     }
 }
 //comments u serId
