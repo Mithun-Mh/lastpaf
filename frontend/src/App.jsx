@@ -27,11 +27,11 @@ function App() {
           <Route path="/post/:postId" element={<SinglePostView />} />
           <Route path="/" element={<Navigate to="/auth" replace />} />
           <Route path="/learning-plans/my-plans" element={<ViewLearningPlans />} />
-          <Route path="/learning-plans/create" element={<CreateLearningPlan />} /> 
-          <Route path="/learning-plans/edit/:id" element={<EditLearningPlan />} /> 
+          <Route path="/learning-plans/create" element={<CreateLearningPlan />} />
+          <Route path="/learning-plans/edit/:id" element={<EditLearningPlan />} />
           <Route path="/learning-plans" element={<ViewAllLearningPlans />} />
           <Route path="/learning-plans/followed" element={<OtherLearningPlans />} />
-                  </Routes>
+        </Routes>
       </Router>
     </ToastProvider>
   );

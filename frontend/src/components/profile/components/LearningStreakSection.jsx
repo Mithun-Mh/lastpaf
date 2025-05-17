@@ -58,7 +58,7 @@ const FitnessStreakSection = ({ user, refreshTrigger }) => {
       <h2 className="text-lg font-semibold text-ExtraDarkColor mb-4 flex items-center">
         <i className='bx bx-flame mr-2'></i>Workout Streak
       </h2>
-      
+
       {/* Enhanced Current Streak Display */}
       <div className="bg-gradient-to-r from-orange-100 to-amber-100 rounded-lg p-4 mb-4 flex items-center justify-between">
         <div className="flex items-center">
@@ -82,11 +82,10 @@ const FitnessStreakSection = ({ user, refreshTrigger }) => {
           {/* Streak flame animation for active streaks */}
           {streakData.currentStreak > 0 && (
             <div className="relative">
-              <i className={`bx bxs-flame text-5xl ${
-                streakData.currentStreak > 30 ? 'text-red-500' :
-                streakData.currentStreak > 14 ? 'text-orange-500' :
-                streakData.currentStreak > 7 ? 'text-amber-500' : 'text-yellow-500'
-              } animate-pulse`}></i>
+              <i className={`bx bxs-flame text-5xl ${streakData.currentStreak > 30 ? 'text-red-500' :
+                  streakData.currentStreak > 14 ? 'text-orange-500' :
+                    streakData.currentStreak > 7 ? 'text-amber-500' : 'text-yellow-500'
+                } animate-pulse`}></i>
               <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-sm">
                 {streakData.currentStreak}
               </span>
@@ -94,14 +93,14 @@ const FitnessStreakSection = ({ user, refreshTrigger }) => {
           )}
         </div>
       </div>
-      
+
       {/* Stats Row */}
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div className="bg-gray-50 p-3 rounded-lg text-center">
           <div className="text-xl font-bold text-indigo-600">{streakData.longestStreak}</div>
           <div className="text-sm text-gray-500">Longest Streak</div>
         </div>
-        
+
         <div className="bg-gray-50 p-3 rounded-lg text-center">
           <div className="text-xl font-bold text-green-600">
             {Object.keys(streakData.heatmapData || {}).length}
@@ -109,7 +108,7 @@ const FitnessStreakSection = ({ user, refreshTrigger }) => {
           <div className="text-sm text-gray-500">Active Days</div>
         </div>
       </div>
-      
+
       {/* Next Milestone Progress */}
       {streakData.currentStreak > 0 && (
         <div className="mb-4">
@@ -117,35 +116,33 @@ const FitnessStreakSection = ({ user, refreshTrigger }) => {
             <span>Current: {streakData.currentStreak} days</span>
             <span>
               {streakData.currentStreak < 3 ? 'Next: 3 days' :
-               streakData.currentStreak < 7 ? 'Next: 7 days' :
-               streakData.currentStreak < 14 ? 'Next: 14 days' : 
-               streakData.currentStreak < 30 ? 'Next: 30 days' : 'Maximum milestone reached!'}
+                streakData.currentStreak < 7 ? 'Next: 7 days' :
+                  streakData.currentStreak < 14 ? 'Next: 14 days' :
+                    streakData.currentStreak < 30 ? 'Next: 30 days' : 'Maximum milestone reached!'}
             </span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2.5">
-            <div className={`h-2.5 rounded-full ${
-              streakData.currentStreak >= 30 ? 'bg-green-600' :
-              streakData.currentStreak >= 14 ? 'bg-blue-600' :
-              streakData.currentStreak >= 7 ? 'bg-purple-600' : 'bg-orange-600'
-            }`} style={{ 
-              width: `${
-                streakData.currentStreak >= 30 ? '100' :
-                streakData.currentStreak >= 14 ? Math.min(100, (streakData.currentStreak / 30) * 100) :
-                streakData.currentStreak >= 7 ? Math.min(100, (streakData.currentStreak / 14) * 100) :
-                streakData.currentStreak >= 3 ? Math.min(100, (streakData.currentStreak / 7) * 100) :
-                Math.min(100, (streakData.currentStreak / 3) * 100)
-              }%` 
-            }}></div>
+            <div className={`h-2.5 rounded-full ${streakData.currentStreak >= 30 ? 'bg-green-600' :
+                streakData.currentStreak >= 14 ? 'bg-blue-600' :
+                  streakData.currentStreak >= 7 ? 'bg-purple-600' : 'bg-orange-600'
+              }`} style={{
+                width: `${streakData.currentStreak >= 30 ? '100' :
+                    streakData.currentStreak >= 14 ? Math.min(100, (streakData.currentStreak / 30) * 100) :
+                      streakData.currentStreak >= 7 ? Math.min(100, (streakData.currentStreak / 14) * 100) :
+                        streakData.currentStreak >= 3 ? Math.min(100, (streakData.currentStreak / 7) * 100) :
+                          Math.min(100, (streakData.currentStreak / 3) * 100)
+                  }%`
+              }}></div>
           </div>
         </div>
       )}
-      
+
       {streakData.lastWorkoutDate && (
         <div className="mb-4 text-center text-sm text-gray-600 bg-gray-50 p-2 rounded-lg">
           Last workout: <span className="font-medium">{new Date(streakData.lastWorkoutDate).toLocaleDateString()}</span>
         </div>
       )}
-      
+
       {/* Improved Activity Heatmap */}
       <div className="border-t border-gray-200 pt-4">
         <h3 className="text-sm font-medium text-gray-700 mb-2 flex items-center">
@@ -160,21 +157,20 @@ const FitnessStreakSection = ({ user, refreshTrigger }) => {
                   .slice(-30)
                   .map(([date, count]) => {
                     // Format date for tooltip
-                    const formattedDate = new Date(date).toLocaleDateString(undefined, { 
-                      weekday: 'short', 
-                      month: 'short', 
+                    const formattedDate = new Date(date).toLocaleDateString(undefined, {
+                      weekday: 'short',
+                      month: 'short',
                       day: 'numeric'
                     });
-                    
+
                     return (
-                      <div 
-                        key={date} 
-                        className={`w-6 h-6 rounded-sm border border-gray-200 flex items-center justify-center transition-all hover:scale-110 cursor-pointer ${
-                          count > 3 ? 'bg-green-700 hover:bg-green-800' : 
-                          count > 2 ? 'bg-green-600 hover:bg-green-700' : 
-                          count > 1 ? 'bg-green-500 hover:bg-green-600' : 
-                          'bg-green-400 hover:bg-green-500'
-                        }`}
+                      <div
+                        key={date}
+                        className={`w-6 h-6 rounded-sm border border-gray-200 flex items-center justify-center transition-all hover:scale-110 cursor-pointer ${count > 3 ? 'bg-green-700 hover:bg-green-800' :
+                            count > 2 ? 'bg-green-600 hover:bg-green-700' :
+                              count > 1 ? 'bg-green-500 hover:bg-green-600' :
+                                'bg-green-400 hover:bg-green-500'
+                          }`}
                         title={`${formattedDate}: ${count} workout ${count === 1 ? 'session' : 'sessions'}`}
                       >
                         {count > 1 && (
@@ -213,7 +209,7 @@ const FitnessStreakSection = ({ user, refreshTrigger }) => {
           )}
         </div>
       </div>
-      
+
       {/* Streak Badges */}
       <div className="mt-4 border-t border-gray-200 pt-4">
         <h3 className="text-sm font-medium text-gray-700 mb-2">Fitness Achievements</h3>

@@ -16,7 +16,7 @@ const PostCreationModal = ({
   postFileInputRef
 }) => {
   if (!isOpen) return null;
-  
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-lg">
@@ -118,11 +118,10 @@ const PostCreationModal = ({
               <button
                 type="submit"
                 disabled={isSubmittingPost || (!postContent.trim() && !postMedia)}
-                className={`px-4 py-2 rounded-lg ${
-                  isSubmittingPost || (!postContent.trim() && !postMedia)
+                className={`px-4 py-2 rounded-lg ${isSubmittingPost || (!postContent.trim() && !postMedia)
                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     : 'bg-DarkColor text-white hover:bg-ExtraDarkColor'
-                } transition-colors`}
+                  } transition-colors`}
               >
                 {isSubmittingPost ? (
                   <div className="flex items-center">

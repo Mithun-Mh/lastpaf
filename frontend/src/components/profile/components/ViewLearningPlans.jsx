@@ -228,13 +228,12 @@ const ViewUserLearningPlans = () => {
                           <p className="text-gray-600">{week.description || 'No description'}</p>
                           {week.status && typeof week.status === 'string' && (
                             <span
-                              className={`inline-block mt-1 px-2 py-1 text-xs font-medium rounded-full ${
-                                week.status === 'Completed'
+                              className={`inline-block mt-1 px-2 py-1 text-xs font-medium rounded-full ${week.status === 'Completed'
                                   ? 'bg-green-100 text-green-800'
                                   : week.status === 'In Progress'
-                                  ? 'bg-yellow-100 text-yellow-800'
-                                  : 'bg-gray-100 text-gray-800'
-                              }`}
+                                    ? 'bg-yellow-100 text-yellow-800'
+                                    : 'bg-gray-100 text-gray-800'
+                                }`}
                             >
                               {week.status}
                             </span>

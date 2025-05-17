@@ -352,9 +352,8 @@ const CreateFitnessSchedule = () => {
               value={formData.title}
               onChange={(e) => handleInputChange(e)}
               onBlur={() => handleBlur(null, null, 'title')}
-              className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${
-                (touched.title || hasAttemptedSubmit) && errors.title ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${(touched.title || hasAttemptedSubmit) && errors.title ? 'border-red-500' : 'border-gray-300'
+                }`}
               placeholder="Enter schedule title"
               required
             />
@@ -373,9 +372,8 @@ const CreateFitnessSchedule = () => {
               value={formData.description}
               onChange={(e) => handleInputChange(e)}
               onBlur={() => handleBlur(null, null, 'description')}
-              className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${
-                (touched.description || hasAttemptedSubmit) && errors.description ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${(touched.description || hasAttemptedSubmit) && errors.description ? 'border-red-500' : 'border-gray-300'
+                }`}
               placeholder="What are your fitness goals with this schedule?"
               rows="4"
             />
@@ -428,11 +426,10 @@ const CreateFitnessSchedule = () => {
                         value={resource.title}
                         onChange={(e) => handleInputChange(e, 'resources', index, 'title')}
                         onBlur={() => handleBlur('resources', index, 'title')}
-                        className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${
-                          (touched[`resourcesTitle${index}`] || hasAttemptedSubmit) && errors[`resourceTitle${index}`]
+                        className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${(touched[`resourcesTitle${index}`] || hasAttemptedSubmit) && errors[`resourceTitle${index}`]
                             ? 'border-red-500'
                             : 'border-gray-300'
-                        }`}
+                          }`}
                         placeholder="Resource title"
                         required
                       />
@@ -447,11 +444,10 @@ const CreateFitnessSchedule = () => {
                         value={resource.type}
                         onChange={(e) => handleInputChange(e, 'resources', index, 'type')}
                         onBlur={() => handleBlur('resources', index, 'type')}
-                        className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${
-                          (touched[`resourcesType${index}`] || hasAttemptedSubmit) && errors[`resourceType${index}`]
+                        className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${(touched[`resourcesType${index}`] || hasAttemptedSubmit) && errors[`resourceType${index}`]
                             ? 'border-red-500'
                             : 'border-gray-300'
-                        }`}
+                          }`}
                         required
                       >
                         <option value="" disabled>
@@ -476,11 +472,10 @@ const CreateFitnessSchedule = () => {
                       value={resource.url}
                       onChange={(e) => handleInputChange(e, 'resources', index, 'url')}
                       onBlur={() => handleBlur('resources', index, 'url')}
-                      className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${
-                        (touched[`resourcesUrl${index}`] || hasAttemptedSubmit) && errors[`resourceUrl${index}`]
+                      className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${(touched[`resourcesUrl${index}`] || hasAttemptedSubmit) && errors[`resourceUrl${index}`]
                           ? 'border-red-500'
                           : 'border-gray-300'
-                      }`}
+                        }`}
                       placeholder="https://example.com"
                       required
                     />
@@ -537,11 +532,10 @@ const CreateFitnessSchedule = () => {
                         value={week.title}
                         onChange={(e) => handleInputChange(e, 'weeks', index, 'title')}
                         onBlur={() => handleBlur('weeks', index, 'title')}
-                        className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${
-                          (touched[`weeksTitle${index}`] || hasAttemptedSubmit) && errors[`weekTitle${index}`]
+                        className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${(touched[`weeksTitle${index}`] || hasAttemptedSubmit) && errors[`weekTitle${index}`]
                             ? 'border-red-500'
                             : 'border-gray-300'
-                        }`}
+                          }`}
                         placeholder="Week focus (e.g., Cardio & Core)"
                         required
                       />
@@ -556,11 +550,10 @@ const CreateFitnessSchedule = () => {
                         value={week.status}
                         onChange={(e) => handleInputChange(e, 'weeks', index, 'status')}
                         onBlur={() => handleBlur('weeks', index, 'status')}
-                        className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${
-                          (touched[`weeksStatus${index}`] || hasAttemptedSubmit) && errors[`weekStatus${index}`]
+                        className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${(touched[`weeksStatus${index}`] || hasAttemptedSubmit) && errors[`weekStatus${index}`]
                             ? 'border-red-500'
                             : 'border-gray-300'
-                        }`}
+                          }`}
                         required
                       >
                         <option value="Not Started">Not Started</option>
@@ -579,11 +572,10 @@ const CreateFitnessSchedule = () => {
                       value={week.description}
                       onChange={(e) => handleInputChange(e, 'weeks', index, 'description')}
                       onBlur={() => handleBlur('weeks', index, 'description')}
-                      className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${
-                        (touched[`weeksDescription${index}`] || hasAttemptedSubmit) && errors[`weekDescription${index}`]
+                      className={`block w-full border rounded-lg shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ${(touched[`weeksDescription${index}`] || hasAttemptedSubmit) && errors[`weekDescription${index}`]
                           ? 'border-red-500'
                           : 'border-gray-300'
-                      }`}
+                        }`}
                       placeholder="Describe the exercises and goals for this week"
                       rows="2"
                     />
@@ -607,11 +599,10 @@ const CreateFitnessSchedule = () => {
             <button
               type="submit"
               disabled={isSubmitting || (hasAttemptedSubmit && hasErrors)}
-              className={`px-5 py-2 rounded-lg text-white font-medium flex items-center ${
-                isSubmitting || (hasAttemptedSubmit && hasErrors)
+              className={`px-5 py-2 rounded-lg text-white font-medium flex items-center ${isSubmitting || (hasAttemptedSubmit && hasErrors)
                   ? 'bg-gray-400 cursor-not-allowed'
                   : 'bg-indigo-600 hover:bg-indigo-700 transition-colors duration-200'
-              }`}
+                }`}
             >
               {isSubmitting ? (
                 <>

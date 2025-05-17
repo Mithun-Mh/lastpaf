@@ -479,8 +479,8 @@ const FitnessTab = () => {
                   {selectedPlan.sourcePlanId
                     ? `Followed by ${currentUser?.name || 'User'} (Created by @${isLoadingUsernames ? 'Loading...' : userMap[selectedPlan.sourcePlanId] || 'Unknown'})`
                     : selectedPlan.userId === currentUser.id
-                    ? currentUser?.name
-                    : userMap[selectedPlan.id] || 'Unknown'}
+                      ? currentUser?.name
+                      : userMap[selectedPlan.id] || 'Unknown'}
                 </span>
               </div>
 

@@ -9,14 +9,14 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
   const { addToast } = useToast();
 
   if (!isOpen || !post) return null;
-  
+
   const handleShare = async (e) => {
     e.preventDefault();
     setIsSharing(true);
-    
+
     try {
       const token = localStorage.getItem('token');
-      
+
       const response = await fetch(`${API_BASE_URL}/posts/${post.id}/share`, {
         method: 'POST',
         headers: {
@@ -25,7 +25,7 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
         },
         body: JSON.stringify({ shareMessage })
       });
-      
+
       // Check response status before trying to parse JSON
       if (!response.ok) {
         // Try to get error message from response if possible
@@ -43,25 +43,25 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
         }
         throw new Error(errorMessage);
       }
-      
+
       // Check if the response has content before trying to parse it
       const contentType = response.headers.get('content-type');
       let data = {};
-      
+
       if (contentType && contentType.includes('application/json') && response.headers.get('content-length') !== '0') {
         data = await response.json();
         console.log("Shared post response:", data);
       }
-      
+
       addToast('Post shared successfully!', 'success');
       setShareMessage('');
       onClose();
-      
+
       // Force a reload to show the newly shared post
       setTimeout(() => {
         window.location.reload();
       }, 1000);
-      
+
     } catch (error) {
       console.error('Error sharing post:', error);
       addToast(error.message || 'Failed to share post. Please try again.', 'error');
@@ -69,7 +69,7 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
       setIsSharing(false);
     }
   };
-  
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-lg">
@@ -82,9 +82,10 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
             <i className='bx bx-x text-2xl'></i>
           </button>
         </div>
-        
+
         <form onSubmit={handleShare}>
           <div className="p-4">
+            {/* User Profile Picture and Name */}
             <div className="flex items-center mb-4">
               <img
                 src={currentUser?.profilePicture || DefaultAvatar}
@@ -99,7 +100,7 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
                 </p>
               </div>
             </div>
-            
+
             <textarea
               value={shareMessage}
               onChange={(e) => setShareMessage(e.target.value)}
@@ -107,9 +108,11 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
               rows="3"
               placeholder="Write something about this post..."
             ></textarea>
-            
-            {/* Original Post Preview */}
+
+            {/* Displays a preview of the original post */}
             <div className="mt-4 p-3 border border-gray-200 rounded-lg bg-gray-50">
+
+              {/* Post Author */}
               <div className="flex items-center mb-2">
                 <img
                   src={post.authorProfilePicture || DefaultAvatar}
@@ -124,9 +127,11 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
                   </p>
                 </div>
               </div>
-              
+
+              {/* Post Content */}
               <p className="text-sm text-gray-800 line-clamp-3">{post.content}</p>
-              
+
+              {/* Post Media */}
               {post.mediaUrl && (
                 <div className="mt-2 h-32 overflow-hidden rounded-md">
                   {post.mediaType === 'IMAGE' ? (
@@ -144,7 +149,8 @@ const SharePostModal = ({ isOpen, onClose, post, currentUser }) => {
               )}
             </div>
           </div>
-          
+
+          {/* Buttons: Cancel and Share */}
           <div className="p-4 border-t border-gray-200 flex justify-end">
             <button
               type="button"

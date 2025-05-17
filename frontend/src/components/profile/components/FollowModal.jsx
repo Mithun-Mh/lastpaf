@@ -49,8 +49,8 @@ const FollowModal = ({
                     </div>
                     <button
                       className={`px-3 py-1 rounded-full text-xs font-medium ${user.isFollowing
-                          ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                          : 'bg-DarkColor text-white hover:bg-ExtraDarkColor'
+                        ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        : 'bg-DarkColor text-white hover:bg-ExtraDarkColor'
                         }`}
                       onClick={() => onFollowToggle(user.id, user.isFollowing)}
                     >

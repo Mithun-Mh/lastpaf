@@ -31,7 +31,7 @@ export const ToastProvider = ({ children }) => {
   // Function to add a toast
   const addToast = useCallback((message, type = 'info', duration = 3000) => {
     const id = Date.now();
-    
+
     // Add the toast to the list
     setToasts(prevToasts => [...prevToasts, { id, message, type }]);
 
@@ -53,14 +53,14 @@ export const ToastProvider = ({ children }) => {
       {children}
       <div className="fixed top-5 right-5 z-50 space-y-3">
         {toasts.map(toast => (
-          <div 
+          <div
             key={toast.id}
             className={`p-4 rounded-lg border-l-4 shadow-md animate-fadeIn ${TOAST_TYPES[toast.type].bgColor}`}
           >
             <div className="flex items-center">
               <i className={`${TOAST_TYPES[toast.type].icon} text-2xl mr-3`}></i>
               <span className="font-medium">{toast.message}</span>
-              <button 
+              <button
                 onClick={() => removeToast(toast.id)}
                 className="ml-4 text-gray-500 hover:text-gray-700"
               >
@@ -74,7 +74,8 @@ export const ToastProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use the toast
+// Custom hook to use the Toast context
+// This hook allows components to easily access the toast context
 export const useToast = () => {
   const context = useContext(ToastContext);
   if (!context) {

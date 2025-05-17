@@ -672,3 +672,9 @@ public class PostController {
         return ResponseEntity.ok(updatedPost);
     }
 }
+//comments u serId
+//    private String userId;
+//    private String username;
+//postId
+//private string postId
+//    private String postId;

@@ -8,7 +8,7 @@ const ConfirmDialog = ({ isOpen, onClose, onConfirm, title, message, confirmText
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
         <h3 className="text-lg font-semibold mb-2">{title}</h3>
         <p className="text-gray-600 mb-6">{message}</p>
-        
+
         <div className="flex justify-end space-x-3">
           <button
             onClick={onClose}
