@@ -215,7 +215,7 @@ const CreateFitnessSchedule = () => {
       ...formData,
       weeks: [...formData.weeks, { title: '', description: '', status: 'Not Started' }],
     });
-    setTouched((prev) => ({
+    setTouched((prev) => ({  //It's setting "not touched" (false) for the fields of a new week entry when a user adds a new week to the form. This is useful to prevent showing validation errors immediately for the new inputs.
       ...prev,
       [`weekTitle${formData.weeks.length}`]: false,
       [`weekDescription${formData.weeks.length}`]: false,
