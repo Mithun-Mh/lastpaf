@@ -82,13 +82,11 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
       const fitnessTemplates = [
         {
           title: "Cardio Workout",
-          category: "CARDIO",
-          fields: [
+          category: "CARDIO",          fields: [
             { name: "workoutName", label: "Workout Name", type: "text", required: true },
             { name: "description", label: "Description", type: "textarea", required: false },
             { name: "muscleGroups", label: "Muscle Groups Worked", type: "tags", required: true },
             { name: "duration", label: "Duration (minutes)", type: "number", required: true },
-            { name: "caloriesBurned", label: "Calories Burned", type: "number", required: false },
             { name: "intensity", label: "Intensity Level", type: "select", options: ["LOW", "MEDIUM", "HIGH"], required: true }
           ]
         },
@@ -106,13 +104,11 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
         },
         {
           title: "Other Activity",
-          category: "OTHER",
-          fields: [
+          category: "OTHER",          fields: [
             { name: "workoutName", label: "Activity Name", type: "text", required: true },
             { name: "description", label: "Description", type: "textarea", required: false },
             { name: "muscleGroups", label: "Muscle Groups Worked", type: "tags", required: true },
             { name: "duration", label: "Duration (minutes)", type: "number", required: true },
-            { name: "caloriesBurned", label: "Calories Burned", type: "number", required: false },
             { name: "intensity", label: "Intensity Level", type: "select", options: ["LOW", "MEDIUM", "HIGH"], required: true }
           ]
         }
