@@ -65,7 +65,7 @@ const CreateFitnessSchedule = () => {
     // Title validation
     if (!formData.title.trim()) {                                 //It helps catch empty or space-only inputs in form validation.(.trim)
       newErrors.title = 'Title is required';
-    } else if (formData.title.length < 3) {
+    } else if (formData.title.length < 3) {                           // Check if the title is shorter than 3 characters.
       newErrors.title = 'Title must be at least 3 characters long';
     } else if (formData.title.length > 255) {
       newErrors.title = 'Title cannot exceed 255 characters';
