@@ -169,7 +169,7 @@ const CreateFitnessSchedule = () => {
     validateForm();
   };
 
-  const handleBlur = (section, index, field) => {
+  const handleBlur = (section, index, field) => {  //The handleBlur function is typically triggered when a user leaves an input field
     const fieldKey = section ? `${section}${field}${index}` : field;
     setTouched((prev) => ({ ...prev, [fieldKey]: true }));
     validateForm();
