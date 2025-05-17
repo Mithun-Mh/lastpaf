@@ -290,7 +290,7 @@ const EditLearningPlan = () => {
 
     setIsSubmitting(true);
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token');                                     //update method
       const response = await fetch(`${API_BASE_URL}/learning-plan/${id}`, {
         method: 'PUT',
         headers: {
