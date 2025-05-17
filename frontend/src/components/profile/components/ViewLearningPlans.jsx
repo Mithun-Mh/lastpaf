@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';           //delete function 113
+import React, { useState, useEffect } from 'react';           //delete function 113   //edit button 178
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../common/Navbar';
 import { useToast } from '../../common/Toast';
@@ -175,7 +175,7 @@ const ViewUserLearningPlans = () => {
                       onClick={() => handleEdit(plan.id)}
                       className="text-DarkColor hover:text-ExtraDarkColor"
                     >
-                      Edit
+                      Edit                                                                
                     </button>
                     <button
                       onClick={() => handleDelete(plan.id)}
