@@ -6,7 +6,7 @@ import { API_BASE_URL } from '../../../config/apiConfig';
 
 const CreateFitnessSchedule = () => {
   const navigate = useNavigate();
-  const { addToast } = useToast();
+  const { addToast } = useToast();  //useToast() is a custom hook provided by the toast library.
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
