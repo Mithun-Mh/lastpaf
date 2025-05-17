@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';             //get method line 67
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../common/Toast';
 import { API_BASE_URL } from '../../../config/apiConfig';
@@ -64,7 +64,7 @@ const ViewAllLearningPlans = () => {
   useEffect(() => {
     let isMounted = true;
 
-    const fetchLearningPlans = async () => {
+    const fetchLearningPlans = async () => {                             //get method        
       setIsLoadingPlans(true);
       try {
         const token = localStorage.getItem('token');
