@@ -307,7 +307,7 @@ const CreateFitnessSchedule = () => {
     }
   };
 
-  const handleCancel = () => {
+  const handleCancel = () => {        //cancel function
     if (window.confirm('Are you sure you want to discard changes?')) {
       navigate('/');
     }
