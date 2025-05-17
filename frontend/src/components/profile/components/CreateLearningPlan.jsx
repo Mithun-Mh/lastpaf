@@ -245,7 +245,7 @@ const CreateFitnessSchedule = () => {
     validateForm();
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {       //submit function
     e.preventDefault();
     setHasAttemptedSubmit(true);
 
