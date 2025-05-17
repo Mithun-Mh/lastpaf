@@ -22,7 +22,7 @@ const CreateFitnessSchedule = () => {
 
   const resourceTypes = ['Video', 'Equipment', 'Exercise', 'Nutrition', 'Supplement'];
 
-  useEffect(() => {
+  useEffect(() => {                                      //log to access data
     const token = localStorage.getItem('token');
     if (!token) {
       addToast('Please log in to continue.', 'error');
