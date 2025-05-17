@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';           
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../common/Navbar';
 import { useToast } from '../../common/Toast';
@@ -109,7 +109,7 @@ const ViewUserLearningPlans = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${API_BASE_URL}/learning-plan/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/learning-plan/${id}`, {                     //delete function
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
