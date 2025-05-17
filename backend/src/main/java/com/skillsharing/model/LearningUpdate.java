@@ -23,6 +23,7 @@ public class LearningUpdate {
     private LocalDateTime completedAt;
     private LocalDateTime createdAt; // Add missing field
     private String resourceName; // Add missing field
+    private Double caloriesBurned; // New field for calories burned
     
     // Constructors
     public LearningUpdate() {}
@@ -114,5 +115,13 @@ public class LearningUpdate {
     
     public void setResourceName(String resourceName) {
         this.resourceName = resourceName;
+    }
+
+    public Double getCaloriesBurned() {
+        return caloriesBurned;
+    }
+
+    public void setCaloriesBurned(Double caloriesBurned) {
+        this.caloriesBurned = caloriesBurned;
     }
 }

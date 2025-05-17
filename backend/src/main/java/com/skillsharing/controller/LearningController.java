@@ -57,7 +57,7 @@ public class LearningController {
                   List.of("BEGINNER", "INTERMEDIATE", "ADVANCED"), "required", true)
         ));
         
-        // Course completion template
+        // course completion tempalte
         Map<String, Object> courseTemplate = new HashMap<>();
         courseTemplate.put("title", "Completed a Course");
         courseTemplate.put("category", "COURSE");
@@ -99,10 +99,15 @@ public class LearningController {
         
         learningUpdate.setUserId(currentUser.getId());
         learningUpdate.setCreatedAt(LocalDateTime.now());
-        
         if (learningUpdate.getCompletedAt() == null) {
             learningUpdate.setCompletedAt(LocalDateTime.now());
         }
+        // Set calories burned if present (for fitness updates)
+        if (learningUpdate.getCaloriesBurned() == null && learningUpdate.getCaloriesBurned() == null) {
+            learningUpdate.setCaloriesBurned(0.0);
+        }
+        // Accept caloriesBurned from request if present
+        // (No change needed, as Jackson will set it from JSON)
         
         // Initialize skills if null
         if (currentUser.getSkills() == null) {
@@ -246,6 +251,10 @@ public class LearningController {
         existingUpdate.setHoursSpent(updatedData.getHoursSpent());
         existingUpdate.setCompletedAt(updatedData.getCompletedAt() != null ? 
                                      updatedData.getCompletedAt() : existingUpdate.getCompletedAt());
+        // Set calories burned if present (for fitness updates)
+        existingUpdate.setCaloriesBurned(updatedData.getCaloriesBurned());
+        // Accept caloriesBurned from request if present
+        // (No change needed, as Jackson will set it from JSON)
         
         // Handle skill updates
         if (updatedData.getSkillsLearned() != null) {

@@ -25,6 +25,21 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
     }
   }, [user]);
 
+  // Helper to map backend learning fields to fitness fields for UI
+  const mapLearningToFitness = (data) => {
+    return {
+      id: data.id,
+      workoutName: data.title || data.resourceName || '',
+      description: data.description || '',
+      muscleGroups: data.skillsLearned || [],
+      duration: data.hoursSpent || '',
+      caloriesBurned: data.caloriesBurned || '', // not present in backend, will be blank
+      intensity: data.difficulty || '',
+      category: data.category || '',
+      completedAt: data.completedAt || null,
+    };
+  };
+
   const fetchWorkoutUpdates = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -39,7 +54,8 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
       }
 
       const data = await response.json();
-      setWorkoutUpdates(data);
+      // Map backend fields to fitness fields for UI
+      setWorkoutUpdates(data.map(mapLearningToFitness));
     } catch (error) {
       console.error('Error fetching workout updates:', error);
       addToast('Failed to load workout updates', 'error');
@@ -108,9 +124,26 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
     }
   };
 
+  // Helper to map fitness fields to backend learning fields
+  const mapFitnessToLearning = (data) => {
+    return {
+      title: data.workoutName || data.title || '',
+      description: data.description || '',
+      category: data.category || '',
+      resourceName: data.workoutName || data.title || '',
+      difficulty: data.intensity || '',
+      hoursSpent: data.duration || 0,
+      completedAt: data.completedAt || null,
+      skillsLearned: data.muscleGroups || [],
+      caloriesBurned: data.caloriesBurned !== undefined && data.caloriesBurned !== '' ? Number(data.caloriesBurned) : null,
+      id: data.id // for edit mode
+    };
+  };
+
   const handleAddWorkoutUpdate = async (workoutData) => {
     try {
       const token = localStorage.getItem('token');
+      const mappedData = mapFitnessToLearning(workoutData);
 
       if (isEditMode && updateToEdit) {
         const response = await fetch(`${API_BASE_URL}/learning/updates/${updateToEdit.id}`, {
@@ -119,7 +152,7 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify(workoutData)
+          body: JSON.stringify(mappedData)
         });
 
         if (!response.ok) {
@@ -127,9 +160,15 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
         }
 
         const data = await response.json();
+        console.log('Edit response data:', data); // Debug: log the response
+
+        if (!data.learningUpdate) {
+          addToast('Edit response missing learningUpdate. Check backend response.', 'error');
+          return;
+        }
 
         setWorkoutUpdates(prev =>
-          prev.map(item => item.id === updateToEdit.id ? data.learningUpdate : item)
+          prev.map(item => item.id === updateToEdit.id ? mapLearningToFitness(data.learningUpdate) : item)
         );
 
         if (onUserUpdated && data.user) {
@@ -144,7 +183,7 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify(workoutData)
+          body: JSON.stringify(mappedData)
         });
 
         if (!response.ok) {
@@ -152,7 +191,7 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
         }
 
         const data = await response.json();
-        setWorkoutUpdates(prev => [data.learningUpdate, ...prev]);
+        setWorkoutUpdates(prev => [mapLearningToFitness(data.learningUpdate), ...prev]);
 
         if (onUserUpdated && data.user) {
           onUserUpdated(data.user);
@@ -176,6 +215,7 @@ const AchievementsTab = ({ user, currentUser, onUserUpdated }) => {
   };
 
   const handleEditClick = (update) => {
+    console.log('Edit clicked:', update); // Debug: log the update being edited
     setUpdateToEdit(update);
     setIsEditMode(true);
     setShowWorkoutModal(true);

@@ -7,22 +7,50 @@ const FitnessUpdateModal = ({ isOpen, onClose, onSubmit, templates, isEditMode =
 
   // Handle initialization based on edit mode
   useEffect(() => {
-    if (isEditMode && updateToEdit) {
+    if (isOpen && isEditMode && updateToEdit && templates.length > 0) {
       // Find the matching template
       const matchingTemplate = templates.find(template => template.category === updateToEdit.category);
 
       if (matchingTemplate) {
         setSelectedTemplate(matchingTemplate);
-        // Pre-fill the form with existing data
-        setFormData({
-          ...updateToEdit,
-          // Ensure any nested properties are properly copied
-          muscleGroups: [...(updateToEdit.muscleGroups || [])]
+        // Build formData with all fields from the template, using updateToEdit values or defaults
+        const newFormData = {};
+        matchingTemplate.fields.forEach(field => {
+          // Try to get value from updateToEdit using both field.name and fallback to alternative keys
+          let value = updateToEdit[field.name];
+          // Fallbacks for common field name mismatches
+          if (value === undefined) {
+            if (field.name === 'workoutName' && updateToEdit.title) value = updateToEdit.title;
+            if (field.name === 'title' && updateToEdit.workoutName) value = updateToEdit.workoutName;
+          }
+          if (field.type === 'tags') {
+            if (Array.isArray(value)) {
+              newFormData[field.name] = [...value];
+            } else if (typeof value === 'string') {
+              newFormData[field.name] = value.split(',').map(s => s.trim()).filter(Boolean);
+            } else {
+              newFormData[field.name] = [];
+            }
+          } else if (field.type === 'number') {
+            newFormData[field.name] = (value !== undefined && value !== null) ? value : '';
+          } else {
+            newFormData[field.name] = (value !== undefined && value !== null) ? value : '';
+          }
         });
+        // Always set category and title from updateToEdit if present
+        newFormData.category = updateToEdit.category || matchingTemplate.category;
+        newFormData.title = updateToEdit.title || matchingTemplate.title;
+        if (updateToEdit.id) newFormData.id = updateToEdit.id;
+        setFormData(newFormData);
         setStep(2); // Skip to the form step
       }
+    } else if (!isOpen) {
+      // Reset form when modal closes
+      setSelectedTemplate(null);
+      setFormData({});
+      setStep(1);
     }
-  }, [isEditMode, updateToEdit, templates]);
+  }, [isOpen, isEditMode, updateToEdit, templates]);
 
   const resetForm = () => {
     setSelectedTemplate(null);
