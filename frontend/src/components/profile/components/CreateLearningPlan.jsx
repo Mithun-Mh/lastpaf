@@ -59,7 +59,7 @@ const CreateFitnessSchedule = () => {
     fetchCurrentUser();
   }, [navigate, addToast]);
 
-  const validateForm = () => {
+  const validateForm = () => {                                  //form validation
     const newErrors = {};
 
     // Title validation
