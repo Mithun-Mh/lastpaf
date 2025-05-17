@@ -46,12 +46,15 @@ public class Post {
     @LastModifiedDate
     private LocalDateTime updatedAt;
     
+    private boolean edited; // Add this field for tracking edits
+    
     // Fields to track if this post is a shared post
     private String originalPostId;
     private String shareMessage;
     
     // Track who shared this post
-    private Set<String> shares;
+    @Builder.Default
+    private Set<String> shares = new HashSet<>();
     
     // Helper method to check if this is a shared post
     public boolean isSharedPost() {
@@ -70,5 +73,7 @@ public class Post {
         private String userProfilePicture;
         private String content;
         private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
+        private boolean edited;
     }
 }

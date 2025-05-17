@@ -6,6 +6,7 @@ import SharePostModal from '../../common/SharePostModal';
 import CommentSection from '../../common/CommentSection';
 import { useToast } from '../../common/Toast';
 import ConfirmDialog from '../../common/ConfirmDialog';
+import EditPostModal from '../../common/EditPostModal';
 
 const PostsTab = ({
   isCurrentUserProfile,
@@ -28,6 +29,8 @@ const PostsTab = ({
   const [originalPosts, setOriginalPosts] = useState({});
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [postToEdit, setPostToEdit] = useState(null);
   
   // Fetch original posts for shared posts
   useEffect(() => {
@@ -180,6 +183,19 @@ const PostsTab = ({
     }
   };
 
+  const handleEditPost = (post) => {
+    setPostToEdit(post);
+    setShowEditModal(true);
+  };
+
+  const updatePostInState = (updatedPost) => {
+    setPosts(prevPosts => 
+      prevPosts.map(post => 
+        post.id === updatedPost.id ? updatedPost : post
+      )
+    );
+  };
+
   return (
     <div className="space-y-6">
       {isCurrentUserProfile && (
@@ -238,12 +254,24 @@ const PostsTab = ({
                         ? `${post.authorFirstName} ${post.authorLastName}`
                         : post.authorFirstName || post.authorLastName || post.authorUsername}
                     </p>
-                    <p className="text-xs text-gray-500">{formatPostDate(post.createdAt)}</p>
+                    <div className="flex items-center text-xs text-gray-500">
+                      <span>{formatPostDate(post.createdAt)}</span>
+                      {post.edited && <span className="ml-1 italic">(edited)</span>}
+                    </div>
                   </div>
                 </div>
                 
                 {currentUser && post.authorId === currentUser.id && (
-                  <div className="relative group">
+                  <div className="flex space-x-2">
+                    {!post.originalPostId && (
+                      <button 
+                        className="text-gray-400 hover:text-blue-500 p-1 rounded-full hover:bg-gray-100"
+                        onClick={() => handleEditPost(post)}
+                        title="Edit post"
+                      >
+                        <i className='bx bx-edit'></i>
+                      </button>
+                    )}
                     <button 
                       className="text-gray-400 hover:text-red-500 p-1 rounded-full hover:bg-gray-100"
                       onClick={() => handleDeletePost(post.id)}
@@ -330,7 +358,7 @@ const PostsTab = ({
                 post={post}
                 currentUser={currentUser}
                 formatTime={formatPostDate}
-                onCommentAdded={handlePostUpdated}
+                onCommentAdded={updatePostInState}
                 onCommentDeleted={handleDeleteComment}
               />
             </div>
@@ -366,6 +394,14 @@ const PostsTab = ({
         message="Are you sure you want to delete this post? This action cannot be undone and any shared versions of this post will also be removed."
         confirmText="Delete"
         cancelText="Cancel"
+      />
+
+      <EditPostModal
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        post={postToEdit}
+        currentUser={currentUser}
+        onPostUpdated={handlePostUpdated}
       />
     </div>
   );
